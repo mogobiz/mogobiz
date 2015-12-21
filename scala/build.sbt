@@ -160,8 +160,7 @@ lazy val mogobizLaunch = project.in(file("mogobiz-launch")).dependsOn(mogobizRun
 
 lazy val mogopayLaunch = project.in(file("mogopay-launch")).dependsOn(mogopayCore)
 
-
-//lazy val mogobizSelenium = project.in(file("mogobiz-selenium")).dependsOn(mogobizLaunch)
+lazy val mogobizSelenium = project.in(file("mogobiz-selenium")).dependsOn(mogobizLaunch)
 
 lazy val mogobizCake = project.in(file("mogobiz-cake")).dependsOn(mogobizRun)
 
@@ -181,7 +180,7 @@ lazy val root = project.in(file(".")).aggregate(
   msys,
   mogobizLaunch,
   mogopayLaunch,
-//  mogobizSelenium,
+  mogobizSelenium,
   mogobizCake
 )
 
