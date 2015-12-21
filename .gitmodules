@@ -1,0 +1,63 @@
+[submodule "grails/mogobiz-admin"]
+	path = grails/mogobiz-admin
+	url = git@github.com:mogobiz/mogobiz-admin.git
+[submodule "grails/mogobiz-core"]
+	path = grails/mogobiz-core
+	url = git@github.com:mogobiz/mogobiz-core.git
+[submodule "grails/mogobiz-extensions"]
+	path = grails/mogobiz-extensions
+	url = git@github.com:mogobiz/mogobiz-extensions.git
+[submodule "grails/mogobiz-pim"]
+	path = grails/mogobiz-pim
+	url = git@github.com:mogobiz/mogobiz-pim.git
+[submodule "grails/mogobiz-rivers"]
+	path = grails/mogobiz-rivers
+	url = git@github.com:mogobiz/mogobiz-rivers.git
+[submodule "grails/mogobiz-tools"]
+	path = grails/mogobiz-tools
+	url = git@github.com:mogobiz/mogobiz-tools.git
+[submodule "scala/mogobiz-auth"]
+	path = scala/mogobiz-auth
+	url = git@github.com:mogobiz/mogobiz-auth.git
+[submodule "scala/mogobiz-cake"]
+	path = scala/mogobiz-cake
+	url = git@github.com:mogobiz/mogobiz-cake.git
+[submodule "scala/mogobiz-html2pdf"]
+	path = scala/mogobiz-html2pdf
+	url = git@github.com:mogobiz/mogobiz-html2pdf.git
+[submodule "scala/mogobiz-json"]
+	path = scala/mogobiz-json
+	url = git@github.com:mogobiz/mogobiz-json.git
+[submodule "scala/mogobiz-launch"]
+	path = scala/mogobiz-launch
+	url = git@github.com:mogobiz/mogobiz-launch.git
+[submodule "scala/mogobiz-notify"]
+	path = scala/mogobiz-notify
+	url = git@github.com:mogobiz/mogobiz-notify.git
+[submodule "scala/mogobiz-run"]
+	path = scala/mogobiz-run
+	url = git@github.com:mogobiz/mogobiz-run.git
+[submodule "scala/mogobiz-session"]
+	path = scala/mogobiz-session
+	url = git@github.com:mogobiz/mogobiz-session.git
+[submodule "scala/mogobiz-system"]
+	path = scala/mogobiz-system
+	url = git@github.com:mogobiz/mogobiz-system.git
+[submodule "scala/mogobiz-template"]
+	path = scala/mogobiz-template
+	url = git@github.com:mogobiz/mogobiz-template.git
+[submodule "scala/mogobiz-utils"]
+	path = scala/mogobiz-utils
+	url = git@github.com:mogobiz/mogobiz-utils.git
+[submodule "scala/mogopay-common"]
+	path = scala/mogopay-common
+	url = git@github.com:mogobiz/mogopay-common.git
+[submodule "scala/mogopay-core"]
+	path = scala/mogopay-core
+	url = git@github.com:mogobiz/mogopay-core.git
+[submodule "scala/mogopay-launch"]
+	path = scala/mogopay-launch
+	url = git@github.com:mogobiz/mogopay-launch.git
+[submodule "scala/mogobiz-es"]
+	path = scala/mogobiz-es
+	url = git@github.com:mogobiz/mogobiz-es.git
