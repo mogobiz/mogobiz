@@ -162,8 +162,6 @@ lazy val mogopayLaunch = project.in(file("mogopay-launch")).dependsOn(mogopayCor
 
 lazy val mogobizSelenium = project.in(file("mogobiz-selenium")).dependsOn(mogobizLaunch)
 
-lazy val mogobizCake = project.in(file("mogobiz-cake")).dependsOn(mogobizRun)
-
 lazy val root = project.in(file(".")).aggregate(
   utils,
   template,
@@ -180,9 +178,7 @@ lazy val root = project.in(file(".")).aggregate(
   msys,
   mogobizLaunch,
   mogopayLaunch,
-  mogobizSelenium,
-  mogobizCake
-).enablePlugins(BuildInfoPlugin).settings(
+  mogobizSelenium).enablePlugins(BuildInfoPlugin).settings(
     buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
     buildInfoPackage := "com.mogobiz"
   )
