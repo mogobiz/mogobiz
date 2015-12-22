@@ -182,7 +182,10 @@ lazy val root = project.in(file(".")).aggregate(
   mogopayLaunch,
   mogobizSelenium,
   mogobizCake
-)
+).enablePlugins(BuildInfoPlugin).settings(
+    buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
+    buildInfoPackage := "com.mogobiz"
+  )
 
 
 
