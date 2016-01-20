@@ -64,3 +64,7 @@
 [submodule "scala/mogobiz-selenium"]
 	path = scala/mogobiz-selenium
 	url = git@github.com:mogobiz/mogobiz-selenium.git
+[submodule "ansible"]
+	path = ansible
+	url = git@github.com:mogobiz/mogobiz-ansible.git
+	branch = develop
