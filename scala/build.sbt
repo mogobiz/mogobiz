@@ -26,7 +26,7 @@ val akkaV = "2.3.9"
 
 val sprayV = "1.3.3"
 
-val scalikeV = "2.2.5"
+val scalikeV = "2.3.3"
 
 val jacksonV = "2.5.2"
 
