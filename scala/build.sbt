@@ -132,11 +132,13 @@ parallelExecution in(ThisBuild, Test) := false
 
 //parallelExecution in (ThisBuild, Test) := true
 
-lazy val utils = project.in(file("mogobiz-utils"))
+lazy val msys = project.in(file("mogobiz-system"))
 
 lazy val template = project.in(file("mogobiz-template"))
 
 lazy val html2pdf = project.in(file("mogobiz-html2pdf"))
+
+lazy val utils = project.in(file("mogobiz-utils")).dependsOn(msys)
 
 lazy val json = project.in(file("mogobiz-json")).dependsOn(utils)
 
@@ -145,8 +147,6 @@ lazy val es = project.in(file("mogobiz-es")).dependsOn(utils, json)
 lazy val session = project.in(file("mogobiz-session")).dependsOn(es, json, utils)
 
 lazy val mnotify = project.in(file("mogobiz-notify")).dependsOn(html2pdf, es, json, session, utils)
-
-lazy val msys = project.in(file("mogobiz-system"))
 
 lazy val mauth = project.in(file("mogobiz-auth")).dependsOn(html2pdf, es, json, session, utils)
 
