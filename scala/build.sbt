@@ -26,7 +26,7 @@ val akkaV = "2.3.9"
 
 val sprayV = "1.3.3"
 
-val scalikeV = "2.3.3"
+val scalikeV = "2.3.5"
 
 val jacksonV = "2.5.2"
 
@@ -204,7 +204,7 @@ packMain := Map(
   "mogobiz-selenium" -> "com.mogobiz.selenium.run.RestSelenium"
 )
 
-packExtraClasspath := Map("mogobiz-all" -> Seq("${PROG_HOME}/conf"), "mogopay" -> Seq("${PROG_HOME}/conf"), "mogobiz" -> Seq("${PROG_HOME}/conf"), "mogobiz-selenium" -> Seq("${PROG_HOME}/conf"))
+packExtraClasspath := Map("smogobiz-all" -> Seq("${PROG_HOME}/conf"), "mogopay" -> Seq("${PROG_HOME}/conf"), "mogobiz" -> Seq("${PROG_HOME}/conf"), "mogobiz-selenium" -> Seq("${PROG_HOME}/conf"))
 
 packGenerateWindowsBatFile := true
 
