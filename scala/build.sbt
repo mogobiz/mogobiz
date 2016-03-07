@@ -204,7 +204,7 @@ packMain := Map(
   "mogobiz-selenium" -> "com.mogobiz.selenium.run.RestSelenium"
 )
 
-packExtraClasspath := Map("smogobiz-all" -> Seq("${PROG_HOME}/conf"), "mogopay" -> Seq("${PROG_HOME}/conf"), "mogobiz" -> Seq("${PROG_HOME}/conf"), "mogobiz-selenium" -> Seq("${PROG_HOME}/conf"))
+packExtraClasspath := Map("mogobiz-all" -> Seq("${PROG_HOME}/conf"), "mogopay" -> Seq("${PROG_HOME}/conf"), "mogobiz" -> Seq("${PROG_HOME}/conf"), "mogobiz-selenium" -> Seq("${PROG_HOME}/conf"))
 
 packGenerateWindowsBatFile := true
 
