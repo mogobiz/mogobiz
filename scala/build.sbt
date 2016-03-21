@@ -21,6 +21,7 @@ resolvers in ThisBuild ++= Seq(
   "BoneCP Repository" at "http://jolbox.com/bonecp/downloads/maven"
 )
 
+git.useGitDescribe := true
 
 val akkaV = "2.3.9"
 
@@ -178,7 +179,7 @@ lazy val root = project.in(file(".")).aggregate(
   msys,
   mogobizLaunch,
   mogopayLaunch,
-  mogobizSelenium).enablePlugins(BuildInfoPlugin).settings(
+  mogobizSelenium).enablePlugins(GitVersioning, GitBranchPrompt, BuildInfoPlugin).settings(
     buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
     buildInfoPackage := "com.mogobiz"
   )
