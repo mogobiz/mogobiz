@@ -4,7 +4,7 @@ name := "mogobiz-run"
 
 organization in ThisBuild := "com.mogobiz"
 
-version in ThisBuild := "0.3-SNAPSHOT"
+//version in ThisBuild := "0.3-SNAPSHOT"
 
 logLevel in Global := Level.Info
 
@@ -179,9 +179,9 @@ lazy val root = project.in(file(".")).aggregate(
   msys,
   mogobizLaunch,
   mogopayLaunch,
-  mogobizSelenium).enablePlugins(GitVersioning, GitBranchPrompt, BuildInfoPlugin).settings(
-    buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
-    buildInfoPackage := "com.mogobiz"
+  mogobizSelenium).enablePlugins(GitVersioning, GitBranchPrompt /*, BuildInfoPlugin*/).settings(
+//    buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
+//    buildInfoPackage := "com.mogobiz"
   )
 
 
