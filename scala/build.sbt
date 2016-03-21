@@ -4,7 +4,7 @@ name := "mogobiz-run"
 
 organization in ThisBuild := "com.mogobiz"
 
-version in ThisBuild := "0.2"
+version in ThisBuild := "0.3-SNAPSHOT"
 
 logLevel in Global := Level.Info
 
