@@ -21,6 +21,11 @@ resolvers in ThisBuild ++= Seq(
   "BoneCP Repository" at "http://jolbox.com/bonecp/downloads/maven"
 )
 
+git.gitTagToVersionNumber := { tag: String =>
+  if(tag matches "[A-Z][A-Z]_[0-9]+\\..*") Some(tag)
+  else None
+}
+
 git.useGitDescribe := true
 
 val akkaV = "2.3.9"
