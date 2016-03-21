@@ -23,6 +23,8 @@ resolvers in ThisBuild ++= Seq(
 
 git.useGitDescribe := true
 
+git.gitUncommittedChanges in ThisBuild := false
+
 val akkaV = "2.3.9"
 
 val sprayV = "1.3.3"
