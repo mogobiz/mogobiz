@@ -10,27 +10,28 @@ fi
 echo "$1 $2"
 git checkout -b $2
 git checkout $2
-git push $1 $2
+git pull $1 $2
 
-createbranch() {
+pull() {
 	submodules=`ls -d mogo*/`
 	git checkout -b $2
 	git checkout $2
-	git push $1 $2
+	git pull $1 $2
 	for submodule in $submodules
 	do
 		echo "$submodule"
 		cd $submodule
 		git checkout -b $2
 		git checkout $2
-		git push $1 $2
+		git pull $1 $2
 		cd ..
 	done
 }
 
 cd grails
-createbranch $1 $2
+pull $1 $2
 cd ..
 cd scala
-createbranch $1 $2
+pull $1 $2
 cd ..
+

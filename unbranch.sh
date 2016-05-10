@@ -8,29 +8,27 @@ if [ "$#" != "2" ]; then
 fi
 
 echo "$1 $2"
-git checkout -b $2
-git checkout $2
-git push $1 $2
+git branch -d $2
+git branch -dr origin/$2
 
-createbranch() {
+delbranch() {
 	submodules=`ls -d mogo*/`
-	git checkout -b $2
-	git checkout $2
-	git push $1 $2
+	git branch -d $2
+	git branch -dr origin/$2
 	for submodule in $submodules
 	do
 		echo "$submodule"
 		cd $submodule
-		git checkout -b $2
-		git checkout $2
-		git push $1 $2
+		git branch -d $2
+		git branch -dr origin/$2
 		cd ..
 	done
 }
 
 cd grails
-createbranch $1 $2
+delbranch $1 $2
 cd ..
 cd scala
-createbranch $1 $2
+delbranch $1 $2
 cd ..
+

@@ -1,6 +1,6 @@
 import scalariform.formatter.preferences._
 
-name := "mogobiz-run"
+name := "mogobiz-app"
 
 organization in ThisBuild := "com.mogobiz"
 

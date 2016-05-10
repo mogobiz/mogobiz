@@ -12,7 +12,7 @@ git tag -d v$2
 git push $1 :refs/tags/v$2
 
 rmtag() {
-	submodules=`ls -d mogo*`
+	submodules=`ls -d mogo*/`
 	echo $submodules
 	git tag -d v$2
 	git push $1 :refs/tags/v$2

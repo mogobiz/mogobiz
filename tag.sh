@@ -13,7 +13,7 @@ git push $1 :refs/tags/v$2
 git tag -a v$2 -m "Version $2"
 
 createtag() {
-	submodules=`ls -d mogo*`
+	submodules=`ls -d mogo*/`
 	echo $submodules
 	git tag -d v$2
 	git push $1 :refs/tags/v$2
