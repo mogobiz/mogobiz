@@ -68,3 +68,6 @@
 	path = ansible
 	url = git@github.com:mogobiz/mogobiz-ansible.git
 	branch = develop
+[submodule "scala/mogobiz-sample"]
+	path = scala/mogobiz-sample
+	url = git@github.com:mogobiz/mogobiz-sample.git

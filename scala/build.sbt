@@ -4,8 +4,6 @@ name := "mogobiz-app"
 
 organization in ThisBuild := "com.mogobiz"
 
-//version in ThisBuild := "0.3-SNAPSHOT"
-
 logLevel in Global := Level.Info
 
 crossScalaVersions in ThisBuild := Seq("2.11.6")
@@ -24,6 +22,7 @@ resolvers in ThisBuild ++= Seq(
 git.useGitDescribe := true
 
 git.gitUncommittedChanges in ThisBuild := false
+
 
 val akkaV = "2.3.9"
 
@@ -111,30 +110,6 @@ libraryDependencies in ThisBuild ++= Seq(
   "com.google.maps" % "google-maps-services" % "0.1.7"
 )
 
-publishTo in ThisBuild := {
-  val artifactory = "http://art.ebiznext.com/artifactory/"
-  if (version.value.trim.endsWith("SNAPSHOT"))
-    Some("snapshots" at artifactory + "libs-snapshot-local")
-  else
-    Some("releases" at artifactory + "libs-release-local")
-}
-
-credentials in ThisBuild += Credentials(Path.userHome / ".ivy2" / ".credentials")
-
-publishArtifact in(ThisBuild, Compile, packageSrc) := false
-
-publishArtifact in(ThisBuild, Test, packageSrc) := false
-
-parallelExecution in(ThisBuild, Test) := false
-
-
-
-//publishTo in ThisBuild := Some(Resolver.file("file",  new File(Path.userHome.absolutePath+"/.m2/repository")))
-
-//publishMavenStyle in ThisBuild := true
-
-//parallelExecution in (ThisBuild, Test) := true
-
 lazy val msys = project.in(file("mogobiz-system"))
 
 lazy val template = project.in(file("mogobiz-template"))
@@ -186,6 +161,60 @@ lazy val root = project.in(file(".")).aggregate(
 //    buildInfoPackage := "com.mogobiz"
   )
 
+
+isSnapshot in ThisBuild := version.value.trim.endsWith("SNAPSHOT")
+
+publishTo in ThisBuild := {
+  val artifactory = "http://art.ebiznext.com/artifactory/"
+  if (isSnapshot.value)
+    Some("snapshots" at artifactory + "libs-snapshot-local")
+  else
+    Some("releases" at artifactory + "libs-release-local")
+}
+
+credentials in ThisBuild += Credentials(Path.userHome / ".ivy2" / ".credentials")
+
+publishArtifact in(ThisBuild, Compile, packageSrc) := false
+
+publishArtifact in(ThisBuild, Test, packageSrc) := false
+
+parallelExecution in(ThisBuild, Test) := false
+
+
+
+//publishTo in ThisBuild := Some(Resolver.file("file",  new File(Path.userHome.absolutePath+"/.m2/repository")))
+
+publishMavenStyle in ThisBuild := true
+
+publishArtifact in (ThisBuild, Test) := false
+
+pomIncludeRepository := { _ => false }
+
+
+//pomExtra := (
+//  <url>http://jsuereth.com/scala-arm</url>
+//    <licenses>
+//      <license>
+//        <name>BSD-style</name>
+//        <url>http://www.opensource.org/licenses/bsd-license.php</url>
+//        <distribution>repo</distribution>
+//      </license>
+//    </licenses>
+//    <scm>
+//      <url>git@github.com:jsuereth/scala-arm.git</url>
+//      <connection>scm:git:git@github.com:jsuereth/scala-arm.git</connection>
+//    </scm>
+//    <developers>
+//      <developer>
+//        <id>jsuereth</id>
+//        <name>Josh Suereth</name>
+//        <url>http://jsuereth.com</url>
+//      </developer>
+//    </developers>)
+
+
+
+//parallelExecution in (ThisBuild, Test) := true
 
 
 addCommandAlias("cc", ";clean;compile")
