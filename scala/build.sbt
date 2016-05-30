@@ -61,6 +61,7 @@ libraryDependencies in ThisBuild ++= Seq(
   "org.scalikejdbc" %% "scalikejdbc-interpolation" % scalikeV,
   "org.scalikejdbc" %% "scalikejdbc-test" % scalikeV % "test",
   "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2",
+  "com.typesafe.scala-logging" %% "scala-logging" % "3.4.0",
   "ch.qos.logback" % "logback-classic" % "1.1.2",
   "com.itextpdf" % "itextpdf" % itextV,
   "com.itextpdf.tool" % "xmlworker" % itextV,
