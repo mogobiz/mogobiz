@@ -46,8 +46,6 @@ val elasticsearchMapperAttachmentsV = "2.7.1"
 
 val itextV = "5.5.4"
 
-val swaggerV = "0.5.0"
-
 val metricsVersion = "3.1.0"
 
 libraryDependencies in ThisBuild ++= Seq(
@@ -55,7 +53,6 @@ libraryDependencies in ThisBuild ++= Seq(
   "mysql" % "mysql-connector-java" % "5.1.12",
   "com.h2database" % "h2" % "1.4.177" % "test",
   "org.apache.derby" % "derbyclient" % "10.11.1.1",
-  "com.gettyimages" %% "spray-swagger" % swaggerV,
   "org.scalikejdbc" %% "scalikejdbc" % scalikeV,
   "org.scalikejdbc" %% "scalikejdbc-config" % scalikeV,
   "org.scalikejdbc" %% "scalikejdbc-interpolation" % scalikeV,
