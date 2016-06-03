@@ -18,7 +18,7 @@ createtag() {
 	git tag -d v$2
 	git push $1 :refs/tags/v$2
 	git tag -a v$2 -m "Version $2"
-	git push $1 :refs/tags/v$2
+	git push $1 v$2
 	for submodule in $submodules
 	do
 		echo "$submodule"
@@ -26,7 +26,7 @@ createtag() {
 		git tag -d v$2
 		git push $1 :refs/tags/v$2
 		git tag -a v$2 -m "Version $2"
-		git push $1 :refs/tags/v$2
+		git push $1 v$2
 		cd ..
 	done
 }
