@@ -11,12 +11,14 @@ echo "$1 $2"
 git checkout -b $2
 git checkout $2
 git pull $1 $2
+git pull --tags
 
 pull() {
 	submodules=`ls -d mogo*/`
 	git checkout -b $2
 	git checkout $2
 	git pull $1 $2
+	git pull --tags
 	for submodule in $submodules
 	do
 		echo "$submodule"
@@ -24,6 +26,7 @@ pull() {
 		git checkout -b $2
 		git checkout $2
 		git pull $1 $2
+		git pull --tags
 		cd ..
 	done
 }
