@@ -24,15 +24,13 @@ git.useGitDescribe := true
 git.gitUncommittedChanges in ThisBuild := false
 
 
-val akkaV = "2.3.9"
-
-val sprayV = "1.3.3"
+val akkaV = "2.4.7"
 
 val scalikeV = "2.3.5"
 
-val jacksonV = "2.5.2"
+val jacksonV = "2.6.2"
 
-val json4sV = "3.2.11"
+val json4sV = "3.3.0"
 
 val elastic4sV = "1.7.4"
 
@@ -45,8 +43,6 @@ val elasticsearchAnalysisICUV = "2.7.0"
 val elasticsearchMapperAttachmentsV = "2.7.1"
 
 val itextV = "5.5.4"
-
-val metricsVersion = "3.1.0"
 
 libraryDependencies in ThisBuild ++= Seq(
   "postgresql" % "postgresql" % "9.1-901.jdbc4",
@@ -69,21 +65,22 @@ libraryDependencies in ThisBuild ++= Seq(
   //"mysql" % "mysql-connector-java" % "5.1.12",
   "com.h2database" % "h2" % "1.4.177" % "test",
   "com.jolbox" % "bonecp" % "0.8.0.RELEASE",
-  "io.spray" %% "spray-can" % sprayV,
-  "io.spray" %% "spray-routing" % sprayV,
-  "io.spray" %% "spray-testkit" % sprayV % "test",
-  "io.spray" %% "spray-client" % sprayV,
-  "io.spray" %% "spray-http" % sprayV,
-  "io.spray" %% "spray-httpx" % sprayV,
-  "io.spray" %% "spray-util" % sprayV,
-  "org.json4s" %% "json4s-native" % json4sV,
+  "com.typesafe.akka" %% "akka-actor" % akkaV,
+  "com.typesafe.akka" %% "akka-stream" % akkaV,
+  "com.typesafe.akka" %% "akka-slf4j" % akkaV,
+  "com.typesafe.akka" %% "akka-http-experimental" % akkaV,
+  "com.typesafe.akka" %% "akka-http-spray-json-experimental" % akkaV,
+  "com.typesafe.akka" %% "akka-http-testkit" % akkaV,
+  "com.typesafe.akka" %% "akka-stream" % akkaV,
+//  "io.spray" %% "spray-can" % sprayV,
+//  "io.spray" %% "spray-routing" % sprayV,
+//  "io.spray" %% "spray-testkit" % sprayV % "test",
+//  "io.spray" %% "spray-client" % sprayV,
+//  "io.spray" %% "spray-http" % sprayV,
+//  "io.spray" %% "spray-httpx" % sprayV,
+//  "io.spray" %% "spray-util" % sprayV,
   "org.json4s" %% "json4s-jackson" % json4sV,
   "org.json4s" %% "json4s-ext" % json4sV,
-  "com.typesafe.akka" %% "akka-actor" % akkaV,
-  "com.typesafe.akka" %% "akka-remote" % akkaV,
-  "com.typesafe.akka" %% "akka-testkit" % akkaV % "test",
-  "com.typesafe.akka" %% "akka-slf4j" % akkaV,
-  "com.typesafe.akka" %% "akka-stream-experimental" % "1.0-M3",
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonV,
   "com.fasterxml.jackson.core" % "jackson-annotations" % jacksonV,
   "com.fasterxml.jackson.core" % "jackson-core" % jacksonV,
@@ -96,7 +93,8 @@ libraryDependencies in ThisBuild ++= Seq(
   "org.elasticsearch" % "elasticsearch-analysis-icu" % elasticsearchAnalysisICUV,
   "org.elasticsearch" % "elasticsearch-mapper-attachments" % elasticsearchMapperAttachmentsV,
   "com.google.zxing" % "core" % "1.7",
-  "org.scala-lang.modules" %% "scala-async" % "0.9.2" % "test",
+  "de.heikoseeberger" %% "akka-http-json4s" % "1.7.0",
+//  "org.scala-lang.modules" %% "scala-async" % "0.9.2" % "test",
   "com.sun.xml.messaging.saaj" % "saaj-impl" % "1.3.18",
   "net.authorize" % "anet-java-sdk" % "1.8.3",
   "com.mortennobel" % "java-image-scaling" % "0.8.6",
