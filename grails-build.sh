@@ -1,2 +1,2 @@
-mvn -e -U -DskipTests  -f grails/mogobiz-pim/pom.xml clean install
+mvn -e -U -DskipTests  -f grails/pom.xml clean install
 
