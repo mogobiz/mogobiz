@@ -20,7 +20,7 @@
     </modules>
 
     <scm>
-        <developerConnection>scm:git:git@github.com:mogobiz/mogobiz.git/grails</developerConnection>
+        <developerConnection>scm:git:git@github.com:mogobiz/mogobiz.git/grails/</developerConnection>
     </scm>
 
     <!-- distributionManagement -->
@@ -770,7 +770,7 @@
                         <pushChanges>true</pushChanges>
                         <generateReleasePoms>true</generateReleasePoms>
                         <tag>${release.version}</tag>
-                        <connectionUrl>scm:git:git@github.com:mogobiz/mogobiz.git/grails</connectionUrl>
+                        <connectionUrl>${connection.url}</connectionUrl>
                     </configuration>
                 </plugin>
             </plugins>
@@ -822,6 +822,7 @@
         <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
         <release.version>1.0.0</release.version>
         <development.version>1.0.0-SNAPSHOT</development.version>
+        <connection.url>scm:git:git@github.com:mogobiz/mogobiz.git/grails/</connection.url>
     </properties>
 
 </project>
