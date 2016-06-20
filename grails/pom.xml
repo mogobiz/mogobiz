@@ -1,0 +1,777 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.mogobiz</groupId>
+    <artifactId>mogobiz-grails</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.0-RC2</version>
+
+    <name>mogobiz grails</name>
+    <description>mogobiz grails</description>
+
+    <modules>
+        <module>mogobiz-tools</module>
+        <module>mogobiz-rivers</module>
+        <module>mogobiz-core</module>
+        <module>mogobiz-extensions</module>
+        <module>mogobiz-admin</module>
+    </modules>
+
+    <!-- distributionManagement -->
+    <distributionManagement>
+        <repository>
+            <id>mogobiz.release</id>
+            <name>Internal Release Repository</name>
+            <url>http://art.ebiznext.com/artifactory/libs-release-local</url>
+        </repository>
+        <snapshotRepository>
+            <id>mogobiz.snapshots</id>
+            <name>Internal Snapshot Repository</name>
+            <url>http://art.ebiznext.com/artifactory/libs-snapshot-local</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <repositories>
+        <repository>
+            <id>mogobiz.release</id>
+            <name>Internal Release Repository</name>
+            <url>http://art.ebiznext.com/artifactory/libs-release-local</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>mogobiz.snapshots</id>
+            <name>Internal Snapshot Repository</name>
+            <url>http://art.ebiznext.com/artifactory/libs-snapshot-local</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>grails</id>
+            <name>grails</name>
+            <url>http://repo.grails.org/grails/core</url>
+        </repository>
+        <repository>
+            <id>grails-plugins</id>
+            <name>grails-plugins</name>
+            <url>http://repo.grails.org/grails/plugins</url>
+        </repository>
+    </repositories>
+    <dependencyManagement>
+        <dependencies>
+            <!-- groovy -->
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-all</artifactId>
+                <version>2.1.9</version>
+            </dependency>
+
+            <!-- rxjava-reactive-streams -->
+            <dependency>
+                <groupId>io.reactivex</groupId>
+                <artifactId>rxjava-reactive-streams</artifactId>
+                <version>1.0.1</version>
+                <scope>compile</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>io.reactivex</groupId>
+                        <artifactId>rxjava</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!-- rxjava -->
+            <dependency>
+                <groupId>io.reactivex</groupId>
+                <artifactId>rxjava</artifactId>
+                <version>1.0.15</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- rxgroovy -->
+            <dependency>
+                <groupId>io.reactivex</groupId>
+                <artifactId>rxgroovy</artifactId>
+                <version>1.0.3</version>
+                <scope>compile</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-all</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!-- reactive-streams -->
+            <dependency>
+                <groupId>org.reactivestreams</groupId>
+                <artifactId>reactive-streams</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.reactivestreams</groupId>
+                <artifactId>reactive-streams-spi</artifactId>
+                <version>0.3</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- scala -->
+            <dependency>
+                <groupId>org.scala-lang</groupId>
+                <artifactId>scala-library</artifactId>
+                <version>${scala.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.scala-lang</groupId>
+                <artifactId>scalap</artifactId>
+                <version>${scala.version}</version>
+            </dependency>
+
+            <!-- akka -->
+            <dependency>
+                <groupId>com.typesafe.akka</groupId>
+                <artifactId>akka-actor_${scala.major.version}</artifactId>
+                <version>${akka.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.typesafe.akka</groupId>
+                <artifactId>akka-testkit_${scala.major.version}</artifactId>
+                <version>${akka.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.typesafe.akka</groupId>
+                <artifactId>akka-stream-experimental_${scala.major.version}</artifactId>
+                <version>${akka.stream.version}</version>
+            </dependency>
+
+            <!-- nekohtml -->
+            <dependency>
+                <groupId>net.sourceforge.nekohtml</groupId>
+                <artifactId>nekohtml</artifactId>
+                <version>1.9.15</version>
+            </dependency>
+
+            <!-- regexp -->
+            <dependency>
+                <groupId>jakarta-regexp</groupId>
+                <artifactId>jakarta-regexp</artifactId>
+                <version>1.4</version>
+            </dependency>
+
+            <!-- spray -->
+            <dependency>
+                <groupId>io.spray</groupId>
+                <artifactId>spray-client_${scala.major.version}</artifactId>
+                <version>${spray.version}</version>
+            </dependency>
+
+            <!-- json4s -->
+            <dependency>
+                <groupId>org.json4s</groupId>
+                <artifactId>json4s-native_${scala.major.version}</artifactId>
+                <version>${json4s.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.scala-lang</groupId>
+                        <artifactId>scalap</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.json4s</groupId>
+                <artifactId>json4s-jackson_${scala.major.version}</artifactId>
+                <version>${json4s.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <!-- twitter4j -->
+            <dependency>
+                <groupId>org.twitter4j</groupId>
+                <artifactId>twitter4j-async</artifactId>
+                <version>${twitter4j.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.twitter4j</groupId>
+                <artifactId>twitter4j-core</artifactId>
+                <version>${twitter4j.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.twitter4j</groupId>
+                <artifactId>twitter4j-media-support</artifactId>
+                <version>${twitter4j.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.twitter4j</groupId>
+                <artifactId>twitter4j-stream</artifactId>
+                <version>${twitter4j.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+
+            <!-- logging -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${sl4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>${sl4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>1.1.2</version>
+            </dependency>
+
+            <!-- dispatcher -->
+            <dependency>
+                <groupId>net.databinder.dispatch</groupId>
+                <artifactId>dispatch-core_${scala.major.version}</artifactId>
+                <version>0.11.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>1.8</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>3.10.1</version>
+            </dependency>
+
+            <!-- tika -->
+            <dependency>
+                <groupId>org.apache.tika</groupId>
+                <artifactId>tika-core</artifactId>
+                <version>1.7</version>
+            </dependency>
+
+            <!-- zxing -->
+            <dependency>
+                <groupId>com.google.zxing</groupId>
+                <artifactId>core</artifactId>
+                <version>1.7</version>
+            </dependency>
+
+            <!-- junit -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.11</version>
+            </dependency>
+
+            <dependency>
+                <groupId>xerces</groupId>
+                <artifactId>xercesImpl</artifactId>
+                <version>2.8.1</version>
+                <scope>runtime</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>xml-apis</groupId>
+                        <artifactId>xml-apis</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!-- spock-core //-->
+            <dependency>
+                <groupId>org.spockframework</groupId>
+                <artifactId>spock-core</artifactId>
+                <version>0.7-groovy-2.0</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-all</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.codehaus.jettison</groupId>
+                <artifactId>jettison</artifactId>
+                <version>1.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>3.0.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.elasticsearch</groupId>
+                <artifactId>elasticsearch</artifactId>
+                <version>1.7.3</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.elasticsearch</groupId>
+                <artifactId>elasticsearch-analysis-icu</artifactId>
+                <version>2.7.0</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.elasticsearch</groupId>
+                <artifactId>elasticsearch-mapper-attachments</artifactId>
+                <version>2.7.1</version>
+                <scope>compile</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.poi</groupId>
+                        <artifactId>poi</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.apache.poi</groupId>
+                        <artifactId>poi-scratchpad</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.codehaus.groovy.modules.http-builder</groupId>
+                <artifactId>http-builder</artifactId>
+                <version>0.5.2</version>
+                <scope>compile</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>net.sourceforge.nekohtml</groupId>
+                        <artifactId>nekohtml</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.oltu.oauth2</groupId>
+                <artifactId>org.apache.oltu.oauth2.common</artifactId>
+                <version>${oauth2.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.oltu.oauth2</groupId>
+                <artifactId>org.apache.oltu.oauth2.authzserver</artifactId>
+                <version>${oauth2.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.oltu.oauth2</groupId>
+                <artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
+                <version>${oauth2.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.restfb</groupId>
+                <artifactId>restfb</artifactId>
+                <version>1.6.7</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${h2.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <!-- BEGIN grails plugins -->
+            <dependency>
+                <groupId>org.grails.plugins</groupId>
+                <artifactId>cache</artifactId>
+                <version>1.1.3</version>
+                <type>zip</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.grails.plugins</groupId>
+                <artifactId>facebook-graph</artifactId>
+                <version>0.14</version>
+                <type>zip</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.grails.plugins</groupId>
+                <artifactId>platform-core</artifactId>
+                <version>1.0.0</version>
+                <type>zip</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.grails.plugins</groupId>
+                <artifactId>google-data</artifactId>
+                <version>0.1.3</version>
+                <type>zip</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.grails.plugins</groupId>
+                <artifactId>email-confirmation</artifactId>
+                <version>2.0.8</version>
+                <type>zip</type>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.grails.plugins</groupId>
+                        <artifactId>quartz</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.grails.plugins</groupId>
+                <artifactId>shiro</artifactId>
+                <version>1.2.1</version>
+                <type>zip</type>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.shiro</groupId>
+                        <artifactId>shiro-quartz</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.grails.plugins</groupId>
+                <artifactId>mail</artifactId>
+                <version>1.0.5</version>
+                <type>zip</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.grails.plugins</groupId>
+                <artifactId>quartz</artifactId>
+                <version>1.0.1</version>
+                <type>zip</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.grails.plugins</groupId>
+                <artifactId>recaptcha</artifactId>
+                <version>0.6.8</version>
+                <type>zip</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.grails.plugins</groupId>
+                <artifactId>cache-headers</artifactId>
+                <version>1.1.6</version>
+                <type>zip</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.grails.plugins</groupId>
+                <artifactId>cached-resources</artifactId>
+                <version>1.0</version>
+                <type>zip</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.grails.plugins</groupId>
+                <artifactId>cookie</artifactId>
+                <version>0.51</version>
+                <type>zip</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.grails.plugins</groupId>
+                <artifactId>rest</artifactId>
+                <version>0.8</version>
+                <type>zip</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.grails.plugins</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>1.4</version>
+                <type>zip</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.grails.plugins</groupId>
+                <artifactId>hibernate</artifactId>
+                <version>3.6.10.15</version>
+                <type>zip</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.grails.plugins</groupId>
+                <artifactId>database-migration</artifactId>
+                <version>1.4.0</version>
+                <type>zip</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.grails.plugins</groupId>
+                <artifactId>resources</artifactId>
+                <version>1.2.8</version>
+                <type>zip</type>
+            </dependency>
+
+            <!--
+            <dependency>
+                <groupId>org.grails.plugins</groupId>
+                <artifactId>spock</artifactId>
+                <version>0.7</version>
+                <type>zip</type>
+            </dependency>
+            //-->
+
+            <dependency>
+                <groupId>org.grails.plugins</groupId>
+                <artifactId>executor</artifactId>
+                <version>0.3</version>
+                <scope>compile</scope>
+                <type>zip</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.grails.plugins</groupId>
+                <artifactId>console</artifactId>
+                <version>1.5.7</version>
+                <scope>runtime</scope>
+                <type>zip</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.grails.plugins</groupId>
+                <artifactId>jquery</artifactId>
+                <version>1.9.1</version>
+                <scope>compile</scope>
+                <type>zip</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.grails.plugins</groupId>
+                <artifactId>jquery-ui</artifactId>
+                <version>1.8.24</version>
+                <scope>compile</scope>
+                <type>zip</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.grails.plugins</groupId>
+                <artifactId>standalone</artifactId>
+                <version>1.3</version>
+                <scope>compile</scope>
+                <type>zip</type>
+            </dependency>
+
+            <!-- END grails plugins -->
+
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>3.10.1</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>xml-apis</groupId>
+                        <artifactId>xml-apis</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jsoup</groupId>
+                <artifactId>jsoup</artifactId>
+                <version>1.8.1</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- build-helper-maven-plugin -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>1.9.1</version>
+                </plugin>
+                <!-- maven-compiler-plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.1</version>
+                    <configuration>
+                        <compilerId>groovy-eclipse-compiler</compilerId>
+                        <source>${compiler.source}</source>
+                        <target>${compiler.target}</target>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                        <fork>false</fork>
+                        <meminitial>256m</meminitial>
+                        <maxmem>1024m</maxmem>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.codehaus.groovy</groupId>
+                            <artifactId>groovy-eclipse-compiler</artifactId>
+                            <version>2.8.0-01</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.codehaus.groovy</groupId>
+                            <artifactId>groovy-eclipse-batch</artifactId>
+                            <version>${groovy.version}-01</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>net.alchim31.maven</groupId>
+                    <artifactId>scala-maven-plugin</artifactId>
+                    <version>3.1.6</version>
+                    <executions>
+                        <execution>
+                            <id>scala-compile</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>add-source</goal>
+                                <goal>compile</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>scala-test-compile</id>
+                            <phase>process-test-resources</phase>
+                            <goals>
+                                <goal>testCompile</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- jsonschema2pojo-maven-plugin -->
+                <plugin>
+                    <groupId>org.jsonschema2pojo</groupId>
+                    <artifactId>jsonschema2pojo-maven-plugin</artifactId>
+                    <version>0.4.22</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.17</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>2.4.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.5.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.8.2</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>tools</id>
+            <activation>
+                <property>
+                    <name>java.vendor</name>
+                    <value>Sun Microsystems Inc.</value>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>com.sun</groupId>
+                    <artifactId>tools</artifactId>
+                    <version>${java.version}</version>
+                    <scope>system</scope>
+                    <systemPath>${java.home}/../lib/tools.jar</systemPath>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
+    <properties>
+        <groovy.major.version>2.1</groovy.major.version>
+        <groovy.version>${groovy.major.version}.8</groovy.version>
+        <compiler.source>1.7</compiler.source>
+        <compiler.target>${compiler.source}</compiler.target>
+        <scala.major.version>2.11</scala.major.version>
+        <scala.version>${scala.major.version}.2</scala.version>
+        <akka.version>2.3.12</akka.version>
+        <akka.stream.version>1.0-M3</akka.stream.version>
+        <spray.version>1.3.2</spray.version>
+        <json4s.version>3.2.11</json4s.version>
+        <sl4j.version>1.7.5</sl4j.version>
+        <log4j.version>1.2.17</log4j.version>
+        <jackson.version>2.7.0</jackson.version>
+        <grails.version>2.3.8</grails.version>
+        <twitter4j.version>2.2.5</twitter4j.version>
+        <oauth2.version>0.31</oauth2.version>
+        <h2.version>1.3.170</h2.version>
+        <mysql.version>5.1.30</mysql.version>
+        <postgresql.version>9.1-901.jdbc4</postgresql.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
+    </properties>
+
+</project>
