@@ -739,6 +739,7 @@
                             <versionTagPrefix>tag-</versionTagPrefix>
                         </flowInitContext>
                         <releaseVersion>${release.version}</releaseVersion>
+                        <developmentVersion>${development.version}</developmentVersion>
                         <autoVersionSubmodules>true</autoVersionSubmodules>
                         <startCommit>master</startCommit>
                         <enableSshAgent>true</enableSshAgent>
