@@ -805,7 +805,7 @@
         <postgresql.version>9.1-901.jdbc4</postgresql.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
-        <release.version>1.0.0-RC3</release.version>
+        <release.version>1.0.0</release.version>
         <development.version>1.0.0-SNAPSHOT</development.version>
     </properties>
 
