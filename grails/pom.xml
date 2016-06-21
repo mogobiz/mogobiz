@@ -730,6 +730,7 @@
                     <artifactId>jgitflow-maven-plugin</artifactId>
                     <version>1.0-m5.1</version>
                     <configuration>
+                        <!-- use default values
                         <flowInitContext>
                             <masterBranchName>master</masterBranchName>
                             <developBranchName>develop</developBranchName>
@@ -738,6 +739,7 @@
                             <hotfixBranchPrefix>hotfix-</hotfixBranchPrefix>
                             <versionTagPrefix>tag-</versionTagPrefix>
                         </flowInitContext>
+                        -->
                         <releaseVersion>${release.version}</releaseVersion>
                         <developmentVersion>${development.version}</developmentVersion>
                         <autoVersionSubmodules>true</autoVersionSubmodules>
