@@ -1,7 +1,7 @@
 cd "$(dirname "$0")"
 
 if [ "$#" != "2" ]; then
-	echo "Usage: branch.sh remove-name branch"
+	echo "Usage: branch.sh remote-name branch"
 	echo "remote-name : usually origin"
 	echo "branch : local & remote branch name"
 	exit 1

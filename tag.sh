@@ -1,7 +1,7 @@
 cd "$(dirname "$0")"
 
 if [ "$#" != "2" ]; then
-	echo "Usage: tag.sh remove-name tag"
+	echo "Usage: tag.sh remote-name tag"
 	echo "remote-name : usually origin"
 	echo "tag : tag name"
 	exit 1
