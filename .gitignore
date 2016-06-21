@@ -2,3 +2,16 @@ scala/.idea
 scala/project/project/target
 scala/project/target
 scala/target
+*.log
+hybris/*
+mogobiz/*
+grails/admin.sh
+grails/build.sh
+grails/mogobiz-from-scratch.sql
+grails/mogobiz.sql
+grails/service.sh
+grails/startDerby.sh
+grails/startDerbyTest.sh
+grails/stopDerby.sh
+grails/stopDerbyTest.sh
+grails/test
