@@ -10,12 +10,14 @@ export source=$1
 export dest=$2
 
 echo "$source $dest"
+git checkout -b $dest
 git checkout $dest
 #git push $dest
 git merge -m "Merge branch $source into $dest" --no-ff $source		
 
 mergebranch() {
 	submodules=`ls -d mogo*/`
+    git checkout -b $dest
 	git checkout $dest
 #	git push $dest
     git merge -m "Merge branch $source into $dest" --no-ff $source		
