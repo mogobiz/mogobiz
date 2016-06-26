@@ -1,3 +1,7 @@
+red=`tput setaf 1`
+green=`tput setaf 2`
+reset=`tput sgr0`
+
 cd "$(dirname "$0")"
 
 if [ "$#" != "2" ]; then
@@ -12,18 +16,21 @@ echo "$1 $2"
 
 if [ x"$(git rev-parse $2)" = x"$(git rev-parse $1/$2)" ]
 then
-    echo $2 and $1/$2 are the same
+    echo "$green ROOT OK$reset"
+else
+    echo "$red ROOT not up to date$reset"
 fi
 
 dif() {
         submodules=`ls -d mogo*/`
         for submodule in $submodules
         do
-                echo "$submodule"
                 cd $submodule
 		if [ x"$(git rev-parse $2)" = x"$(git rev-parse $1/$2)" ]
 		then
-		    echo $2 and $1/$2 are the same
+    			echo "$green $submodule OK$reset"
+		else
+		    	echo "$red $submodule not up to date$reset"
 		fi
                 cd ..
         done
