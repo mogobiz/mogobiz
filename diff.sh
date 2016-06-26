@@ -7,15 +7,6 @@ if [ "$#" != "2" ]; then
         exit 1
 fi
 
-echo "$1 $2"
-cd "$(dirname "$0")"
-
-if [ "$#" != "2" ]; then
-        echo "Usage: branch.sh remote-name branch"
-        echo "remote-name : usually origin"
-        echo "branch : local & remote branch name"
-        exit 1
-fi
 
 echo "$1 $2"
 
