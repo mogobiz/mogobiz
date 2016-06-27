@@ -11,7 +11,7 @@ preparerelease() {
 		echo "$submodule"
 		cd $submodule
 		git add .
-        git commit -a -m "prepare release ${RELEASE_VERSION}"
+        git commit -all -m "prepare release ${RELEASE_VERSION}"
 		git push
 		cd ..
 	done
@@ -25,5 +25,5 @@ cd ..
 #cd ..
 
 git add .
-git commit -a -m "prepare release ${RELEASE_VERSION}"
+git commit -all -m "prepare release ${RELEASE_VERSION}"
 git push
