@@ -16,3 +16,4 @@ grails/stopDerby.sh
 grails/stopDerbyTest.sh
 grails/test
 .idea
+*.iml
