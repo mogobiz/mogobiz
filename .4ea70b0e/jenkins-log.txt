@@ -1,0 +1,85 @@
++ ./prepare-release.sh 1.0.1-RC2
+mogobiz-admin/
+[detached HEAD b85c437] prepare release 1.0.1-RC2
+ Committer: root <root@app226.cluster1>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly:
+
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+Everything up-to-date
+mogobiz-core/
+[detached HEAD 0704300] prepare release 1.0.1-RC2
+ Committer: root <root@app226.cluster1>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly:
+
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+Everything up-to-date
+mogobiz-extensions/
+[detached HEAD aef963c] prepare release 1.0.1-RC2
+ Committer: root <root@app226.cluster1>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly:
+
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+Everything up-to-date
+mogobiz-pim/
+# HEAD detached at 134d51c
+nothing to commit, working directory clean
+Everything up-to-date
+mogobiz-rivers/
+[detached HEAD 83a0201] prepare release 1.0.1-RC2
+ Committer: root <root@app226.cluster1>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly:
+
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 8 files changed, 8 insertions(+), 8 deletions(-)
+Everything up-to-date
+mogobiz-tools/
+[detached HEAD db26e52] prepare release 1.0.1-RC2
+ Committer: root <root@app226.cluster1>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly:
+
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+Everything up-to-date
