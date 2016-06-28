@@ -1,0 +1,25 @@
++ ./prepare-release.sh 1.0.1-RC2
+mogobiz-admin/
+# HEAD detached at b85c437
+nothing to commit, working directory clean
+Everything up-to-date
+mogobiz-core/
+# HEAD detached at 0704300
+nothing to commit, working directory clean
+Everything up-to-date
+mogobiz-extensions/
+# HEAD detached at aef963c
+nothing to commit, working directory clean
+Everything up-to-date
+mogobiz-pim/
+# HEAD detached at 134d51c
+nothing to commit, working directory clean
+Everything up-to-date
+mogobiz-rivers/
+# HEAD detached at 83a0201
+nothing to commit, working directory clean
+Everything up-to-date
+mogobiz-tools/
+# HEAD detached at db26e52
+nothing to commit, working directory clean
+Everything up-to-date
