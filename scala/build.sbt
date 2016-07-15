@@ -242,11 +242,4 @@ packExpandedClasspath := false
 
 fork in ThisBuild := true
 
-scalariformSettings
-
-ScalariformKeys.preferences in ThisBuild := ScalariformKeys.preferences.value
-  .setPreference(RewriteArrowSymbols, true)
-  .setPreference(AlignParameters, true)
-  .setPreference(AlignSingleLineCaseStatements, true)
-  .setPreference(PlaceScaladocAsterisksBeneathSecondAsterisk, true)
-  .setPreference(MultilineScaladocCommentsStartOnFirstLine, true)
+scalafmtConfig in ThisBuild := Some(file(".scalafmt"))
