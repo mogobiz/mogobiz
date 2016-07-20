@@ -1,4 +1,4 @@
-import scalariform.formatter.preferences._
+//import scalariform.formatter.preferences._
 
 name := "mogobiz-app"
 
