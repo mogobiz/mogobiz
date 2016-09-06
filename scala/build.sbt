@@ -126,9 +126,11 @@ lazy val mnotify = project.in(file("mogobiz-notify")).dependsOn(html2pdf, es, js
 
 lazy val mauth = project.in(file("mogobiz-auth")).dependsOn(html2pdf, es, json, session, utils)
 
+lazy val mirakl = project.in(file("mogobiz-mirakl")).dependsOn(msys, json)
+
 lazy val mogopayCommon = project.in(file("mogopay-common")).dependsOn(json)
 
-lazy val mogopayCore = project.in(file("mogopay-core")).dependsOn(msys, mauth, mnotify, html2pdf, es, json, session, utils, template, mogopayCommon)
+lazy val mogopayCore = project.in(file("mogopay-core")).dependsOn(msys, mauth, mnotify, html2pdf, es, json, session, utils, template, mogopayCommon, mirakl)
 
 lazy val mogobizRun = project.in(file("mogobiz-run")).dependsOn(mogopayCore)
 
@@ -147,6 +149,7 @@ lazy val root = project.in(file(".")).aggregate(
   session,
   mnotify,
   mauth,
+  mirakl,
   mogopayCommon,
   mogopayCore,
   mogopayCommon,
