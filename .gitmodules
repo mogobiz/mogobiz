@@ -71,3 +71,6 @@
 [submodule "scala/mogobiz-mirakl"]
 	path = scala/mogobiz-mirakl
 	url = git@github.com:mogobiz/mogobiz-mirakl.git
+[submodule "scala/mogobiz-mockserver"]
+	path = scala/mogobiz-mockserver
+	url = git@github.com:mogobiz/mogobiz-mockserver.git
