@@ -6,7 +6,7 @@
     <groupId>com.mogobiz</groupId>
     <artifactId>mogobiz-grails</artifactId>
     <packaging>pom</packaging>
-    <version>hotfix-1.0.0.3-SNAPSHOT</version>
+    <version>1.0.0.3-SNAPSHOT</version>
 
     <name>mogobiz grails</name>
     <description>mogobiz grails</description>

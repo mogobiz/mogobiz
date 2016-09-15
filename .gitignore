@@ -17,3 +17,4 @@ grails/stopDerbyTest.sh
 grails/test
 .idea
 *.iml
+grails/classes
