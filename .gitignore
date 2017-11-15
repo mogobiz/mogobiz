@@ -18,3 +18,4 @@ grails/test
 .idea
 grails/classes
 *.iml
+out
