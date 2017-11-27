@@ -20,6 +20,7 @@
     <modules>
         <module>grails-email-confirmation</module>
         <module>grails-jquery</module>
+        <module>grails-jquery-ui</module>
     </modules>
 
 </project>

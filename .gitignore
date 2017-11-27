@@ -19,3 +19,4 @@ grails/test
 grails/classes
 *.iml
 out
+.gradle

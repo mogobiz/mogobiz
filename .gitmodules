@@ -81,3 +81,6 @@
 [submodule "grails/plugins/grails-jquery"]
 	path = grails/plugins/grails-jquery
 	url = git@github.com:mogobiz/grails-jquery.git
+[submodule "grails/plugins/grails-jquery-ui"]
+	path = grails/plugins/grails-jquery-ui
+	url = git@github.com:mogobiz/grails-jquery-ui.git

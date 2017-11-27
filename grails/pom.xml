@@ -616,9 +616,9 @@
             </dependency>
 
             <dependency>
-                <groupId>org.grails.plugins</groupId>
+                <groupId>com.mogobiz</groupId>
                 <artifactId>jquery-ui</artifactId>
-                <version>1.8.24</version>
+                <version>1.8.16</version>
                 <scope>compile</scope>
                 <type>zip</type>
             </dependency>
