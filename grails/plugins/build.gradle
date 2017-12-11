@@ -1,0 +1,43 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.grails:grails-gradle-plugin:2.1.1"
+    }
+}
+
+allprojects {
+    group "com.mogobiz"
+}
+
+subprojects {
+
+    apply plugin: "grails"
+    apply plugin: "maven-publish"
+
+    repositories {
+        mavenCentral()
+        maven {
+            url "http://repo.grails.org/grails/core"
+            url "http://repo.grails.org/grails/plugins"
+        //    url "https://art.ebiznext.com/artifactory/libs-release/"
+        }
+        grails.central() //creates a maven repo for the Grails Central repository (Core libraries and plugins)
+    }
+
+    grails {
+        grailsVersion = '2.5.6'
+        groovyVersion = '2.4.10'
+        springLoadedVersion '1.2.0.RELEASE'
+    }
+
+    dependencies {
+        test 'org.grails:grails-test:2.5.6'
+        test 'org.grails:grails-plugin-testing:2.5.6'
+        test 'org.spockframework:spock-core:1.1-groovy-2.4'
+        test 'junit:junit:4.12'
+        provided 'org.grails.plugins:tomcat:7.0.54'
+    }
+
+}
