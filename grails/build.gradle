@@ -15,21 +15,22 @@ allprojects {
     apply plugin: "maven-publish"
 }
 
-project.ext {
+ext {
     jacksonVersion = '2.7.0'
     oauth2Version = '0.31'
     twitter4jVersion = '2.2.5'
-    grailsPluginsList = subprojects.findAll{
-        it.name.startsWith('plugins/grails-') ||
-        it.name == 'mogobiz-core'
-    }
 }
 
-configure(project.grailsPluginsList) {
+configure(
+    subprojects.findAll{
+        it.name.startsWith('plugins/grails-') ||
+        it.name == 'mogobiz-core'
+    }) {
 
     apply plugin: "grails"
 
     repositories {
+        mavenLocal()
         mavenCentral()
         maven {
             url "http://repo.grails.org/grails/core"
@@ -46,8 +47,8 @@ configure(project.grailsPluginsList) {
     }
 
     dependencies {
-        test 'org.grails:grails-test:2.5.6'
-        test 'org.grails:grails-plugin-testing:2.5.6'
+        test "org.grails:grails-test:${grailsVersion}"
+        test "org.grails:grails-plugin-testing:${grailsVersion}"
         test 'org.spockframework:spock-core:1.1-groovy-2.4'
         test 'junit:junit:4.12'
         provided 'org.grails.plugins:tomcat:7.0.54'
