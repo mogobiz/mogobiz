@@ -7,14 +7,19 @@ buildscript {
     }
 }
 
+version "1.0.1-SNAPSHOT"
+
+apply plugin: "java"
+
 allprojects {
     group "com.mogobiz"
+    apply plugin: "maven"
+    apply plugin: "maven-publish"
 }
 
 subprojects {
 
     apply plugin: "grails"
-    apply plugin: "maven-publish"
 
     repositories {
         mavenCentral()
@@ -38,6 +43,28 @@ subprojects {
         test 'org.spockframework:spock-core:1.1-groovy-2.4'
         test 'junit:junit:4.12'
         provided 'org.grails.plugins:tomcat:7.0.54'
+    }
+
+    packagePlugin.outputs.upToDateWhen { false }
+
+    task install(description: "Installs the grails plugin into the local Maven repository.", dependsOn: [packagePlugin, publishToMavenLocal])
+
+    task deploy(description: "Deploys the grails plugin into the remote Maven repository.", dependsOn: [install, publish])
+
+    publishing {
+        publications{
+            mavenJar(MavenPublication) {
+                artifact("${project.name}-${project.version}.zip"){
+                    extension "zip"
+                }
+            }
+        }
+        repositories {
+            maven {
+                // TODO replace with remote repository
+                url "$buildDir/repo"
+            }
+        }
     }
 
 }
