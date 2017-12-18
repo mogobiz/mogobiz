@@ -53,7 +53,8 @@ subprojects {
 
     publishing {
         publications{
-            mavenJar(MavenPublication) {
+            grailsPlugin(MavenPublication) {
+                artifactId = "${project.archivesBaseName}" 
                 artifact("${project.name}-${project.version}.zip"){
                     extension "zip"
                 }
