@@ -28,7 +28,6 @@ class GroovyEclipseCompilerPlugin implements Plugin<Project> {
     FileTree groovyTestSources = project.fileTree(dir: 'src/test/groovy').include('**/*.groovy')
 
     def newCompiler = { JavaCompile compile, ArrayList<FileTree> sources ->
-      println("groovyEclipseCompiler")
       compile.options.fork = true
       compile.options.forkOptions.executable = 'java'
       compile.options.forkOptions.jvmArgs = ['-cp', project.configurations.groovyEclipseCompiler.asPath, 'org.eclipse.jdt.internal.compiler.batch.Main']
