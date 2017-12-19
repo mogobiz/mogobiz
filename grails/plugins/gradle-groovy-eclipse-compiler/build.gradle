@@ -1,0 +1,26 @@
+group "com.mogobiz.gradle"
+version "1.0.1-SNAPSHOT"
+
+apply plugin: 'java-gradle-plugin'
+apply plugin: 'groovy'
+apply plugin: "maven"
+apply plugin: "maven-publish"
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+publishing {
+    publications{
+        gradlePlugin(MavenPublication) {
+            artifactId = "groovy-eclipse-compiler" 
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            // TODO replace with remote repository
+            url "$buildDir/repo"
+        }
+    }
+}
