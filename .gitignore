@@ -20,3 +20,4 @@ grails/classes
 *.iml
 out
 .gradle
+build

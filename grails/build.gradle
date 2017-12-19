@@ -1,31 +1,39 @@
 buildscript {
     repositories {
+        mavenLocal()
         jcenter()
     }
     dependencies {
+        classpath "com.mogobiz.gradle:groovy-eclipse-compiler:1.0.1-SNAPSHOT"
         classpath "org.grails:grails-gradle-plugin:2.1.1"
     }
 }
 
-version "1.0.1-SNAPSHOT"
-
 allprojects {
     group "com.mogobiz"
+    version "1.0.1-SNAPSHOT"
     apply plugin: "maven"
     apply plugin: "maven-publish"
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
 }
 
 ext {
     jacksonVersion = '2.7.0'
     oauth2Version = '0.31'
     twitter4jVersion = '2.2.5'
+    groovyVersion = '2.4.10'
 }
 
 configure(
     subprojects.findAll{
         it.name.startsWith('plugins/grails-') ||
         it.name == 'mogobiz-core'
-    }) {
+    }
+//    [project(':plugins/grails-email-confirmation'), project(':plugins/grails-jquery'), project(':plugins/grails-jquery-ui'), project(':mogobiz-core')]
+    ) {
 
     apply plugin: "grails"
 

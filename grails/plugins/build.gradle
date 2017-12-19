@@ -38,8 +38,8 @@ subprojects {
     }
 
     dependencies {
-        test 'org.grails:grails-test:2.5.6'
-        test 'org.grails:grails-plugin-testing:2.5.6'
+        test "org.grails:grails-test:${grailsVersion}"
+        test "org.grails:grails-plugin-testing:${grailsVersion}"
         test 'org.spockframework:spock-core:1.1-groovy-2.4'
         test 'junit:junit:4.12'
         provided 'org.grails.plugins:tomcat:7.0.54'
