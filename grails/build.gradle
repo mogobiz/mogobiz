@@ -5,6 +5,7 @@ buildscript {
     }
     dependencies {
         classpath "com.mogobiz.gradle:groovy-eclipse-compiler:1.0.1-SNAPSHOT"
+        classpath 'org.jsonschema2pojo:jsonschema2pojo-gradle-plugin:0.5.1'
         classpath "org.grails:grails-gradle-plugin:2.1.1"
     }
 }
