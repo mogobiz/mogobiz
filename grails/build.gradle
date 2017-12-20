@@ -19,7 +19,8 @@ allprojects {
         mavenLocal()
         mavenCentral()
     }
-    publish.dependsOn([])
+    publishToMavenLocal.dependsOn([assemble])
+//    publish.dependsOn([publishToMavenLocal])
 }
 
 ext {
@@ -27,14 +28,16 @@ ext {
     oauth2Version = '0.31'
     twitter4jVersion = '2.2.5'
     groovyVersion = '2.4.10'
-    binaryPlugin = false
+    grailsApp = false
+    grailsBinaryPlugin = false
 }
 
 configure(
     subprojects.findAll{
         it.name.startsWith('plugins/grails-') ||
         it.name == 'mogobiz-core' ||
-        it.name == 'mogobiz-extensions'
+        it.name == 'mogobiz-extensions' ||
+        it.name == 'mogobiz-admin'
     }
     ) {
 
@@ -65,43 +68,58 @@ configure(
         provided 'org.grails.plugins:tomcat:7.0.54'
     }
 
-    packagePlugin.outputs.upToDateWhen { 
-        if(binaryPlugin){
-            project.file("target/grails-plugin-${project.archivesBaseName.minus('grails-plugin-')}-${project.version}.jar").exists() 
+    afterEvaluate { project ->
+        if(!grailsApp){
+            packagePlugin.outputs.upToDateWhen { 
+                if(grailsBinaryPlugin){
+                    project.file("target/grails-plugin-${project.archivesBaseName.minus('grails-plugin-')}-${project.version}.jar").exists() 
+                }
+                else{
+                    project.file("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip").exists() 
+                }
+            }
+            clean.doLast{
+                if(grailsBinaryPlugin){
+                    project.file("target/grails-plugin-${project.archivesBaseName.minus('grails-plugin-')}-${project.version}.jar").delete() 
+                }
+                else{
+                    project.file("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip").delete() 
+                }
+            }
         }
-        else{
-            project.file("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip").exists() 
+        else {
+            war.outputs.upToDateWhen {
+                project.file("${distsDir}/${project.name}-${project.version}.war").exists()
+            }
+            clean.doLast{
+                project.file("${distsDir}/${project.name}-${project.version}.war").delete()
+            }
         }
     }
 
-    clean.doLast{
-        if(binaryPlugin){
-            project.file("target/grails-plugin-${project.archivesBaseName.minus('grails-plugin-')}-${project.version}.jar").delete() 
-        }
-        else{
-            project.file("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip").delete() 
-        }
-    }
-
-    publishToMavenLocal.dependsOn([packagePlugin])
-
-    task install(description: "Installs the grails plugin into the local Maven repository.", dependsOn: [packagePlugin, publishToMavenLocal])
-
-    task deploy(description: "Deploys the grails plugin into the remote Maven repository.", dependsOn: [install, publish])
+    task install(description: "Installs the grails artefact(s) into the local Maven repository.", dependsOn: [publishToMavenLocal])
+    task deploy(description: "Deploys the grails artefact(s) into the remote Maven repository.", dependsOn: [publish])
 
     publishing {
         publications{
             grailsPlugin(MavenPublication) {
-                artifactId = "${project.archivesBaseName}" 
-                if(binaryPlugin){
-                    artifact("target/grails-plugin-${project.archivesBaseName.minus('grails-plugin-')}-${project.version}.jar"){
-                        extension "jar"
-                        classifier "grails-plugin"
+                if(!grailsApp){
+                    artifactId = "${project.archivesBaseName}" 
+                    if(grailsBinaryPlugin){
+                        artifact("target/grails-plugin-${project.archivesBaseName.minus('grails-plugin-')}-${project.version}.jar"){
+                            extension "jar"
+                            classifier "grails-plugin"
+                        }
+                    }
+                    else{
+                        artifact("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip"){
+                            extension "zip"
+                        }
                     }
                 }
                 else{
-                    artifact("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip"){
-                        extension "zip"
+                    artifact("${distsDir}/${project.name}-${project.version}.war"){
+                        extension "war"
                     }
                 }
             }
