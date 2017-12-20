@@ -1,1 +1,1 @@
-include 'plugins/grails-email-confirmation', 'plugins/grails-jquery', 'plugins/grails-jquery-ui', 'mogobiz-tools', 'mogobiz-rivers/http-client', 'mogobiz-rivers/common', 'mogobiz-rivers/spi', 'mogobiz-rivers/elasticsearch-mappings', 'mogobiz-rivers/elasticsearch', 'mogobiz-rivers/google-shopping', 'mogobiz-rivers/cfp', 'mogobiz-rivers/mirakl', 'mogobiz-core'
+include 'plugins/grails-email-confirmation', 'plugins/grails-jquery', 'plugins/grails-jquery-ui', 'mogobiz-tools', 'mogobiz-rivers', 'mogobiz-core'
