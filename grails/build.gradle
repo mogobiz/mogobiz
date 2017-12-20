@@ -74,6 +74,15 @@ configure(
         }
     }
 
+    clean.doLast{
+        if(binaryPlugin){
+            project.file("target/grails-plugin-${project.archivesBaseName.minus('grails-plugin-')}-${project.version}.jar").delete() 
+        }
+        else{
+            project.file("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip").delete() 
+        }
+    }
+
     publishToMavenLocal.dependsOn([packagePlugin])
 
     task install(description: "Installs the grails plugin into the local Maven repository.", dependsOn: [packagePlugin, publishToMavenLocal])
@@ -87,6 +96,7 @@ configure(
                 if(binaryPlugin){
                     artifact("target/grails-plugin-${project.archivesBaseName.minus('grails-plugin-')}-${project.version}.jar"){
                         extension "jar"
+                        classifier "grails-plugin"
                     }
                 }
                 else{
