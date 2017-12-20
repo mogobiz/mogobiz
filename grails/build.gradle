@@ -19,6 +19,7 @@ allprojects {
         mavenLocal()
         mavenCentral()
     }
+    publish.dependsOn([])
 }
 
 ext {
@@ -26,14 +27,15 @@ ext {
     oauth2Version = '0.31'
     twitter4jVersion = '2.2.5'
     groovyVersion = '2.4.10'
+    binaryPlugin = false
 }
 
 configure(
     subprojects.findAll{
         it.name.startsWith('plugins/grails-') ||
-        it.name == 'mogobiz-core'
+        it.name == 'mogobiz-core' ||
+        it.name == 'mogobiz-extensions'
     }
-//    [project(':plugins/grails-email-confirmation'), project(':plugins/grails-jquery'), project(':plugins/grails-jquery-ui'), project(':mogobiz-core')]
     ) {
 
     apply plugin: "grails"
@@ -63,7 +65,16 @@ configure(
         provided 'org.grails.plugins:tomcat:7.0.54'
     }
 
-    packagePlugin.outputs.upToDateWhen { false }
+    packagePlugin.outputs.upToDateWhen { 
+        if(binaryPlugin){
+            project.file("target/grails-plugin-${project.archivesBaseName.minus('grails-plugin-')}-${project.version}.jar").exists() 
+        }
+        else{
+            project.file("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip").exists() 
+        }
+    }
+
+    publishToMavenLocal.dependsOn([packagePlugin])
 
     task install(description: "Installs the grails plugin into the local Maven repository.", dependsOn: [packagePlugin, publishToMavenLocal])
 
@@ -73,8 +84,15 @@ configure(
         publications{
             grailsPlugin(MavenPublication) {
                 artifactId = "${project.archivesBaseName}" 
-                artifact("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip"){
-                    extension "zip"
+                if(binaryPlugin){
+                    artifact("target/grails-plugin-${project.archivesBaseName.minus('grails-plugin-')}-${project.version}.jar"){
+                        extension "jar"
+                    }
+                }
+                else{
+                    artifact("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip"){
+                        extension "zip"
+                    }
                 }
             }
         }
