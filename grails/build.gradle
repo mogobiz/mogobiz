@@ -88,11 +88,17 @@ configure(
             }
         }
         else {
-            war.outputs.upToDateWhen {
-                project.file("${distsDir}/${project.name}-${project.version}.war").exists()
+            war.onlyIf { false }
+
+            task buildStandalone(type: org.grails.gradle.plugin.tasks.GrailsTask)
+
+            assemble.dependsOn([buildStandalone])
+
+            buildStandalone.outputs.upToDateWhen {
+                project.file("target/standalone-${project.version}.jar").exists()
             }
             clean.doLast{
-                project.file("${distsDir}/${project.name}-${project.version}.war").delete()
+                project.file("target/standalone-${project.version}.jar").delete()
             }
         }
     }
@@ -118,8 +124,9 @@ configure(
                     }
                 }
                 else{
-                    artifact("${distsDir}/${project.name}-${project.version}.war"){
-                        extension "war"
+                    artifact("target/standalone-${project.version}.jar"){
+                        extension "jar"
+                        classifier "${grailsEnv}-standalone"
                     }
                 }
             }
