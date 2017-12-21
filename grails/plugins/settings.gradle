@@ -1,1 +1,3 @@
-include 'grails-email-confirmation', 'grails-jquery', 'grails-jquery-ui'
+include 'grails-email-confirmation'
+include 'grails-jquery'
+include 'grails-jquery-ui'

@@ -1,1 +1,31 @@
-include 'plugins/grails-email-confirmation', 'plugins/grails-jquery', 'plugins/grails-jquery-ui', 'mogobiz-tools', 'mogobiz-rivers', 'mogobiz-core', 'mogobiz-extensions', 'mogobiz-admin'
+def f1 = new File("mogobiz-core", "MogobizCoreGrailsPlugin.groovy")
+if(!f1.exists()){
+    new FileOutputStream(f1).close()
+}
+def f2 = new File("mogobiz-extensions", "MogobizExtensionsGrailsPlugin.groovy")
+if(!f2.exists()){
+    new FileOutputStream(f2).close()
+}
+def f3 = new File("mogobiz-admin", "application.properties")
+if(!f3.exists()){
+    new FileOutputStream(f3).close()
+}
+
+include 'plugins:grails-email-confirmation'
+include 'plugins:grails-jquery'
+include 'plugins:grails-jquery-ui'
+
+include 'mogobiz-tools'
+
+include 'mogobiz-rivers:http-client'
+include 'mogobiz-rivers:common'
+include 'mogobiz-rivers:spi'
+include 'mogobiz-rivers:elasticsearch-mappings'
+include 'mogobiz-rivers:elasticsearch'
+include 'mogobiz-rivers:google-shopping'
+include 'mogobiz-rivers:cfp'
+include 'mogobiz-rivers:mirakl'
+
+include 'mogobiz-core'
+include 'mogobiz-extensions'
+include 'mogobiz-admin'

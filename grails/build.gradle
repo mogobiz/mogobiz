@@ -1,3 +1,16 @@
+def toCamelCase(String s){
+    String[] parts = s.split("-")
+    String camelCaseString = ""
+    for (String part : parts){
+        camelCaseString = camelCaseString + toProperCase(part)
+    }
+    camelCaseString
+}
+
+def toProperCase(String s) {
+    s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase()
+}
+
 buildscript {
     repositories {
         mavenLocal()
@@ -21,6 +34,14 @@ allprojects {
     }
     publishToMavenLocal.dependsOn([assemble])
 //    publish.dependsOn([publishToMavenLocal])
+    publishing {
+        repositories {
+            maven {
+                // TODO replace with remote repository
+                url "$buildDir/repo"
+            }
+        }
+    }
 }
 
 ext {
@@ -32,14 +53,42 @@ ext {
     grailsBinaryPlugin = false
 }
 
-configure(
-    subprojects.findAll{
-        it.name.startsWith('plugins/grails-') ||
-        it.name == 'mogobiz-core' ||
-        it.name == 'mogobiz-extensions' ||
-        it.name == 'mogobiz-admin'
+configure(project(":mogobiz-tools")){
+    publishing {
+        publications{
+            library(MavenPublication) {
+                from components.java
+            }
+        }
     }
-    ) {
+}
+
+configure(project(":mogobiz-rivers").subprojects){
+    group "com.mogobiz.rivers"
+    version "1.0.1-SNAPSHOT"
+    apply plugin: "maven"
+    apply plugin: "maven-publish"
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    publishing {
+        publications{
+            library(MavenPublication) {
+                artifactId = "mogobiz-${project.name}" 
+                from components.java
+            }
+        }
+    }
+}
+
+configure([
+    project(":plugins:grails-email-confirmation"), 
+    project(":plugins:grails-jquery"), 
+    project(":plugins:grails-jquery-ui"), 
+    project(":mogobiz-core"), 
+    project(":mogobiz-extensions"), 
+    project(":mogobiz-admin")]){
 
     apply plugin: "grails"
 
@@ -70,6 +119,21 @@ configure(
 
     afterEvaluate { project ->
         if(!grailsApp){
+
+            if(project.name in ["mogobiz-core", "mogobiz-extensions"]){
+                task generateGrailsPluginConfig(type: Copy){
+                    from("${toCamelCase(project.name)}GrailsPlugin.groovy.template"){
+                        filter{ it.replaceAll('%PROJECT_VERSION%', "${version}")}
+                    }
+                    into(".")
+                    rename("${toCamelCase(project.name)}GrailsPlugin.groovy.template", "${toCamelCase(project.name)}GrailsPlugin.groovy")
+                }
+
+                generateGrailsPluginConfig.outputs.upToDateWhen{false}
+
+                packagePlugin.dependsOn([generateGrailsPluginConfig])
+            }
+
             packagePlugin.outputs.upToDateWhen { 
                 if(grailsBinaryPlugin){
                     project.file("target/grails-plugin-${project.archivesBaseName.minus('grails-plugin-')}-${project.version}.jar").exists() 
@@ -78,23 +142,35 @@ configure(
                     project.file("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip").exists() 
                 }
             }
+
             clean.doLast{
                 if(grailsBinaryPlugin){
                     project.file("target/grails-plugin-${project.archivesBaseName.minus('grails-plugin-')}-${project.version}.jar").delete() 
                 }
                 else{
                     project.file("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip").delete() 
+                    project.file("grails-${project.name}-${project.version}.zip").delete() 
                 }
             }
         }
         else {
+            task generateGrailsAppConfig(type: Copy){
+                from("application.properties.template"){
+                    filter{ it.replaceAll('%PROJECT_VERSION%', "${version}")}
+                }
+                into(".")
+                rename("application.properties.template", "application.properties")
+            }
+
+            generateGrailsAppConfig.outputs.upToDateWhen{false}
+
             war.onlyIf { false }
 
             task grailsCompile(description: "Compile grails sources", type: org.grails.gradle.plugin.tasks.GrailsTask){
                 command = "compile"
             }
 
-            task buildStandalone(description: "Package grails application as a jar", type: org.grails.gradle.plugin.tasks.GrailsTask, dependsOn: [grailsCompile])
+            task buildStandalone(description: "Package grails application as a jar", type: org.grails.gradle.plugin.tasks.GrailsTask, dependsOn: [generateGrailsAppConfig, grailsCompile])
 
             assemble.dependsOn([buildStandalone])
 
@@ -112,7 +188,7 @@ configure(
 
     publishing {
         publications{
-            grailsPlugin(MavenPublication) {
+            grailsArtefact(MavenPublication) {
                 if(!grailsApp){
                     artifactId = "${project.archivesBaseName}" 
                     if(grailsBinaryPlugin){
@@ -133,12 +209,6 @@ configure(
                         classifier "${grailsEnv}-standalone"
                     }
                 }
-            }
-        }
-        repositories {
-            maven {
-                // TODO replace with remote repository
-                url "$buildDir/repo"
             }
         }
     }
