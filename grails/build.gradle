@@ -90,7 +90,11 @@ configure(
         else {
             war.onlyIf { false }
 
-            task buildStandalone(type: org.grails.gradle.plugin.tasks.GrailsTask)
+            task grailsCompile(description: "Compile grails sources", type: org.grails.gradle.plugin.tasks.GrailsTask){
+                command = "compile"
+            }
+
+            task buildStandalone(description: "Package grails application as a jar", type: org.grails.gradle.plugin.tasks.GrailsTask, dependsOn: [grailsCompile])
 
             assemble.dependsOn([buildStandalone])
 
