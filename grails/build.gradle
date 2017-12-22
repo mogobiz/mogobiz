@@ -11,9 +11,47 @@ def toProperCase(String s) {
     s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase()
 }
 
+def loadCredentials() {
+    def file = new File("${System.getProperty("user.home")}/.gradle/.credentials")
+    if(!file.exists()){
+        new FileOutputStream(file).close()
+    }
+    def ret = new Properties()
+    def is = new FileInputStream(file)
+    ret.load(is)
+    is.close()
+    ret
+}
+
 buildscript {
+    //FIXME duplicate code
+    def file = new File("${System.getProperty("user.home")}/.gradle/.credentials")
+    if(!file.exists()){
+        new FileOutputStream(file).close()
+    }
+    def __credentials = new Properties()
+    def is = new FileInputStream(file)
+    __credentials.load(is)
+    is.close()
+
     repositories {
         mavenLocal()
+        maven {
+            name "mogobiz.release"
+            url  "https://art.ebiznext.com/artifactory/libs-release-local"
+            credentials {
+                username "${__credentials.getProperty('mogobizReleaseUsername')}"
+                password "${__credentials.getProperty('mogobizReleasePassword')}"
+            }
+        }
+        maven {
+            name "mogobiz.snapshots"
+            url "https://art.ebiznext.com/artifactory/libs-snapshot-local"
+            credentials {
+                username "${__credentials.getProperty('mogobizSnapshostsUsername')}"
+                password "${__credentials.getProperty('mogobizSnapshostsPassword')}"
+            }
+        }
         jcenter()
     }
     dependencies {
@@ -28,17 +66,57 @@ allprojects {
     version "1.0.1-SNAPSHOT"
     apply plugin: "maven"
     apply plugin: "maven-publish"
+
+    def _credentials = loadCredentials()
+
     repositories {
         mavenLocal()
         mavenCentral()
+        maven {
+            name "mogobiz.release"
+            url  "https://art.ebiznext.com/artifactory/libs-release-local"
+            credentials {
+                username "${_credentials.getProperty('mogobizReleaseUsername')}"
+                password "${_credentials.getProperty('mogobizReleasePassword')}"
+            }
+        }
+        maven {
+            name "mogobiz.snapshots"
+            url "https://art.ebiznext.com/artifactory/libs-snapshot-local"
+            credentials {
+                username "${_credentials.getProperty('mogobizSnapshostsUsername')}"
+                password "${_credentials.getProperty('mogobizSnapshostsPassword')}"
+            }
+        }
     }
     publishToMavenLocal.dependsOn([assemble])
 //    publish.dependsOn([publishToMavenLocal])
-    publishing {
-        repositories {
-            maven {
-                // TODO replace with remote repository
-                url "$buildDir/repo"
+
+    if(project.version.endsWith("-SNAPSHOT")){
+        publishing {
+            repositories {
+                maven {
+                    name "mogobiz.snapshots"
+                    url "https://art.ebiznext.com/artifactory/libs-snapshot-local"
+                    credentials {
+                        username "${_credentials.getProperty('mogobizSnapshostsUsername')}"
+                        password "${_credentials.getProperty('mogobizSnapshostsPassword')}"
+                    }
+                }
+            }
+        }
+    }
+    else{
+        publishing {
+            repositories {
+                maven {
+                    name "mogobiz.release"
+                    url  "https://art.ebiznext.com/artifactory/libs-release-local"
+                    credentials {
+                        username "${_credentials.getProperty('mogobizReleaseUsername')}"
+                        password "${_credentials.getProperty('mogobizReleasePassword')}"
+                    }
+                }
             }
         }
     }

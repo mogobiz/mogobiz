@@ -19,10 +19,43 @@ publishing {
             from components.java
         }
     }
-    repositories {
-        maven {
-            // TODO replace with remote repository
-            url "$buildDir/repo"
+}
+
+def file = new File("${System.getProperty("user.home")}/.gradle/.credentials")
+if(!file.exists()){
+    new FileOutputStream(file).close()
+}
+
+def _credentials = new Properties()
+def is = new FileInputStream(file)
+_credentials.load(is)
+is.close()
+
+if(project.version.endsWith("-SNAPSHOT")){
+    publishing {
+        repositories {
+            maven {
+                name "mogobiz.snapshots"
+                url "https://art.ebiznext.com/artifactory/libs-snapshot-local"
+                credentials {
+                    username "${_credentials.getProperty('mogobizSnapshostsUsername')}"
+                    password "${_credentials.getProperty('mogobizSnapshostsPassword')}"
+                }
+            }
+        }
+    }
+}
+else{
+    publishing {
+        repositories {
+            maven {
+                name "mogobiz.release"
+                url  "https://art.ebiznext.com/artifactory/libs-release-local"
+                credentials {
+                    username "${_credentials.getProperty('mogobizReleaseUsername')}"
+                    password "${_credentials.getProperty('mogobizReleasePassword')}"
+                }
+            }
         }
     }
 }
