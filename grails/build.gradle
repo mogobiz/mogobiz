@@ -133,6 +133,16 @@ configure([
 
                 packagePlugin.dependsOn([generateGrailsPluginConfig])
             }
+            else if(project.name.startsWith("grails-")){
+                task copyGrailsPluginArtefact(type: Copy){
+                    from("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip")
+                    into(".")
+                    rename("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip", "grails-${project.name}-${project.version}.zip")
+                }
+                packagePlugin.doLast{
+                    copyGrailsPluginArtefact.execute()
+                }
+            }
 
             packagePlugin.outputs.upToDateWhen { 
                 if(grailsBinaryPlugin){
