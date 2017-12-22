@@ -66,6 +66,7 @@ allprojects {
     version "1.0.1-SNAPSHOT"
     apply plugin: "maven"
     apply plugin: "maven-publish"
+    apply plugin: "idea"
 
     def _credentials = loadCredentials()
 
@@ -124,11 +125,46 @@ allprojects {
 
 ext {
     jacksonVersion = '2.7.0'
+
     oauth2Version = '0.31'
+    _oauth2 = [
+        "org.apache.oltu.oauth2:org.apache.oltu.oauth2.common:$oauth2Version",
+        "org.apache.oltu.oauth2:org.apache.oltu.oauth2.authzserver:$oauth2Version",
+        "org.apache.oltu.oauth2:org.apache.oltu.oauth2.resourceserver:$oauth2Version"
+    ]
+
     twitter4jVersion = '2.2.5'
+    _twitter4j = [
+        "org.twitter4j:twitter4j-async:$twitter4jVersion",
+        "org.twitter4j:twitter4j-core:$twitter4jVersion",
+        "org.twitter4j:twitter4j-media-support:$twitter4jVersion",
+        "org.twitter4j:twitter4j-stream:$twitter4jVersion"
+    ]
+
     groovyVersion = '2.4.10'
+    _groovy = ["org.codehaus.groovy:groovy-all:$groovyVersion"]
+
     grailsApp = false
     grailsBinaryPlugin = false
+
+    scalaMajorVersion = '2.11'
+    scalaMinorVersion = '8'
+    scalaVersion = "$scalaMajorVersion.$scalaMinorVersion"
+    _scala = [
+        "org.scala-lang:scala-library:$scalaVersion", 
+        "org.scala-lang:scalap:$scalaVersion"
+    ]
+
+    akkaVersion = '2.3.12'
+    _akka = [
+        "com.typesafe.akka:akka-actor_$scalaMajorVersion:$akkaVersion"
+    ]
+
+    rsVersion = '1.0.0'
+    rxJavaVersion = '1.0.17'
+    rxJavaRsVersion = '1.0.1'
+    rxGroovyVersion = '1.0.3'
+
 }
 
 configure(project(":mogobiz-tools")){
