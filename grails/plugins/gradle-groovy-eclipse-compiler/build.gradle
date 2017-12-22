@@ -1,5 +1,5 @@
 group "com.mogobiz.gradle"
-version "1.0.1-SNAPSHOT"
+version "0.1-SNAPSHOT"
 
 apply plugin: 'java-gradle-plugin'
 apply plugin: 'groovy'
