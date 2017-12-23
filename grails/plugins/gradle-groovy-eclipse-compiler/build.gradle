@@ -1,0 +1,61 @@
+group "com.mogobiz.gradle"
+version "0.1-SNAPSHOT"
+
+apply plugin: 'java-gradle-plugin'
+apply plugin: 'groovy'
+apply plugin: "maven"
+apply plugin: "maven-publish"
+apply plugin: "idea"
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+publishing {
+    publications{
+        gradlePlugin(MavenPublication) {
+            artifactId = "groovy-eclipse-compiler" 
+            from components.java
+        }
+    }
+}
+
+def file = new File("${System.getProperty("user.home")}/.gradle/.credentials")
+if(!file.exists()){
+    new FileOutputStream(file).close()
+}
+
+def _credentials = new Properties()
+def is = new FileInputStream(file)
+_credentials.load(is)
+is.close()
+
+if(project.version.endsWith("-SNAPSHOT")){
+    publishing {
+        repositories {
+            maven {
+                name "mogobiz.snapshots"
+                url "https://art.ebiznext.com/artifactory/libs-snapshot-local"
+                credentials {
+                    username "${_credentials.getProperty('mogobizSnapshostsUsername')}"
+                    password "${_credentials.getProperty('mogobizSnapshostsPassword')}"
+                }
+            }
+        }
+    }
+}
+else{
+    publishing {
+        repositories {
+            maven {
+                name "mogobiz.release"
+                url  "https://art.ebiznext.com/artifactory/libs-release-local"
+                credentials {
+                    username "${_credentials.getProperty('mogobizReleaseUsername')}"
+                    password "${_credentials.getProperty('mogobizReleasePassword')}"
+                }
+            }
+        }
+    }
+}

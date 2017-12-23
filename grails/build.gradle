@@ -1,0 +1,340 @@
+def toCamelCase(String s){
+    String[] parts = s.split("-")
+    String camelCaseString = ""
+    for (String part : parts){
+        camelCaseString = camelCaseString + toProperCase(part)
+    }
+    camelCaseString
+}
+
+def toProperCase(String s) {
+    s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase()
+}
+
+def loadCredentials() {
+    def file = new File("${System.getProperty("user.home")}/.gradle/.credentials")
+    if(!file.exists()){
+        new FileOutputStream(file).close()
+    }
+    def ret = new Properties()
+    def is = new FileInputStream(file)
+    ret.load(is)
+    is.close()
+    ret
+}
+
+buildscript {
+    //FIXME duplicate code
+    def file = new File("${System.getProperty("user.home")}/.gradle/.credentials")
+    if(!file.exists()){
+        new FileOutputStream(file).close()
+    }
+    def __credentials = new Properties()
+    def is = new FileInputStream(file)
+    __credentials.load(is)
+    is.close()
+
+    repositories {
+        mavenLocal()
+        maven {
+            name "mogobiz.release"
+            url  "https://art.ebiznext.com/artifactory/libs-release-local"
+            credentials {
+                username "${__credentials.getProperty('mogobizReleaseUsername')}"
+                password "${__credentials.getProperty('mogobizReleasePassword')}"
+            }
+        }
+        maven {
+            name "mogobiz.snapshots"
+            url "https://art.ebiznext.com/artifactory/libs-snapshot-local"
+            credentials {
+                username "${__credentials.getProperty('mogobizSnapshostsUsername')}"
+                password "${__credentials.getProperty('mogobizSnapshostsPassword')}"
+            }
+        }
+        jcenter()
+    }
+    dependencies {
+        classpath "com.mogobiz.gradle:groovy-eclipse-compiler:0.1-SNAPSHOT"
+        classpath 'org.jsonschema2pojo:jsonschema2pojo-gradle-plugin:0.5.1'
+        classpath "org.grails:grails-gradle-plugin:2.1.1"
+    }
+}
+
+allprojects {
+    group "com.mogobiz"
+    version "1.0.1-SNAPSHOT"
+    apply plugin: "maven"
+    apply plugin: "maven-publish"
+    apply plugin: "idea"
+
+    def _credentials = loadCredentials()
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven {
+            name "mogobiz.release"
+            url  "https://art.ebiznext.com/artifactory/libs-release-local"
+            credentials {
+                username "${_credentials.getProperty('mogobizReleaseUsername')}"
+                password "${_credentials.getProperty('mogobizReleasePassword')}"
+            }
+        }
+        maven {
+            name "mogobiz.snapshots"
+            url "https://art.ebiznext.com/artifactory/libs-snapshot-local"
+            credentials {
+                username "${_credentials.getProperty('mogobizSnapshostsUsername')}"
+                password "${_credentials.getProperty('mogobizSnapshostsPassword')}"
+            }
+        }
+    }
+    publishToMavenLocal.dependsOn([assemble])
+//    publish.dependsOn([publishToMavenLocal])
+
+    if(project.version.endsWith("-SNAPSHOT")){
+        publishing {
+            repositories {
+                maven {
+                    name "mogobiz.snapshots"
+                    url "https://art.ebiznext.com/artifactory/libs-snapshot-local"
+                    credentials {
+                        username "${_credentials.getProperty('mogobizSnapshostsUsername')}"
+                        password "${_credentials.getProperty('mogobizSnapshostsPassword')}"
+                    }
+                }
+            }
+        }
+    }
+    else{
+        publishing {
+            repositories {
+                maven {
+                    name "mogobiz.release"
+                    url  "https://art.ebiznext.com/artifactory/libs-release-local"
+                    credentials {
+                        username "${_credentials.getProperty('mogobizReleaseUsername')}"
+                        password "${_credentials.getProperty('mogobizReleasePassword')}"
+                    }
+                }
+            }
+        }
+    }
+}
+
+ext {
+    jacksonVersion = '2.7.0'
+
+    oauth2Version = '0.31'
+    _oauth2 = [
+        "org.apache.oltu.oauth2:org.apache.oltu.oauth2.common:$oauth2Version",
+        "org.apache.oltu.oauth2:org.apache.oltu.oauth2.authzserver:$oauth2Version",
+        "org.apache.oltu.oauth2:org.apache.oltu.oauth2.resourceserver:$oauth2Version"
+    ]
+
+    twitter4jVersion = '2.2.5'
+    _twitter4j = [
+        "org.twitter4j:twitter4j-async:$twitter4jVersion",
+        "org.twitter4j:twitter4j-core:$twitter4jVersion",
+        "org.twitter4j:twitter4j-media-support:$twitter4jVersion",
+        "org.twitter4j:twitter4j-stream:$twitter4jVersion"
+    ]
+
+    groovyVersion = '2.4.10'
+    _groovy = ["org.codehaus.groovy:groovy-all:$groovyVersion"]
+
+    grailsApp = false
+    grailsBinaryPlugin = false
+
+    scalaMajorVersion = '2.11'
+    scalaMinorVersion = '8'
+    scalaVersion = "$scalaMajorVersion.$scalaMinorVersion"
+    _scala = [
+        "org.scala-lang:scala-library:$scalaVersion", 
+        "org.scala-lang:scalap:$scalaVersion"
+    ]
+
+    akkaVersion = '2.3.12'
+    _akka = [
+        "com.typesafe.akka:akka-actor_$scalaMajorVersion:$akkaVersion"
+    ]
+
+    rsVersion = '1.0.0'
+    rxJavaVersion = '1.0.17'
+    rxJavaRsVersion = '1.0.1'
+    rxGroovyVersion = '1.0.3'
+
+}
+
+configure(project(":mogobiz-tools")){
+    publishing {
+        publications{
+            library(MavenPublication) {
+                from components.java
+            }
+        }
+    }
+}
+
+configure(project(":mogobiz-rivers").subprojects){
+    group "com.mogobiz.rivers"
+    version "1.0.1-SNAPSHOT"
+    apply plugin: "maven"
+    apply plugin: "maven-publish"
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    publishing {
+        publications{
+            library(MavenPublication) {
+                artifactId = "mogobiz-${project.name}" 
+                from components.java
+            }
+        }
+    }
+}
+
+configure([
+    project(":plugins:grails-email-confirmation"), 
+    project(":plugins:grails-jquery"), 
+    project(":plugins:grails-jquery-ui"), 
+    project(":mogobiz-core"), 
+    project(":mogobiz-extensions"), 
+    project(":mogobiz-admin")]){
+
+    apply plugin: "grails"
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven {
+            url "http://repo.grails.org/grails/core"
+            url "http://repo.grails.org/grails/plugins"
+        //    url "https://art.ebiznext.com/artifactory/libs-release/"
+        }
+        grails.central() //creates a maven repo for the Grails Central repository (Core libraries and plugins)
+    }
+
+    grails {
+        grailsVersion = '2.5.6'
+        groovyVersion = '2.4.10'
+        springLoadedVersion '1.2.0.RELEASE'
+    }
+
+    dependencies {
+        test "org.grails:grails-test:${grailsVersion}"
+        test "org.grails:grails-plugin-testing:${grailsVersion}"
+        test 'org.spockframework:spock-core:1.1-groovy-2.4'
+        test 'junit:junit:4.12'
+        provided 'org.grails.plugins:tomcat:7.0.54'
+    }
+
+    afterEvaluate { project ->
+        if(!grailsApp){
+
+            if(project.name in ["mogobiz-core", "mogobiz-extensions"]){
+                task generateGrailsPluginConfig(type: Copy){
+                    from("${toCamelCase(project.name)}GrailsPlugin.groovy.template"){
+                        filter{ it.replaceAll('%PROJECT_VERSION%', "${version}")}
+                    }
+                    into(".")
+                    rename("${toCamelCase(project.name)}GrailsPlugin.groovy.template", "${toCamelCase(project.name)}GrailsPlugin.groovy")
+                }
+
+                generateGrailsPluginConfig.outputs.upToDateWhen{false}
+
+                packagePlugin.dependsOn([generateGrailsPluginConfig])
+            }
+            else if(project.name.startsWith("grails-")){
+                task copyGrailsPluginArtefact(type: Copy){
+                    from("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip")
+                    into(".")
+                    rename("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip", "grails-${project.name}-${project.version}.zip")
+                }
+                packagePlugin.doLast{
+                    copyGrailsPluginArtefact.execute()
+                }
+            }
+
+            packagePlugin.outputs.upToDateWhen { 
+                if(grailsBinaryPlugin){
+                    project.file("target/grails-plugin-${project.archivesBaseName.minus('grails-plugin-')}-${project.version}.jar").exists() 
+                }
+                else{
+                    project.file("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip").exists() 
+                }
+            }
+
+            clean.doLast{
+                if(grailsBinaryPlugin){
+                    project.file("target/grails-plugin-${project.archivesBaseName.minus('grails-plugin-')}-${project.version}.jar").delete() 
+                }
+                else{
+                    project.file("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip").delete() 
+                    project.file("grails-${project.name}-${project.version}.zip").delete() 
+                }
+            }
+        }
+        else {
+            task generateGrailsAppConfig(type: Copy){
+                from("application.properties.template"){
+                    filter{ it.replaceAll('%PROJECT_VERSION%', "${version}")}
+                }
+                into(".")
+                rename("application.properties.template", "application.properties")
+            }
+
+            generateGrailsAppConfig.outputs.upToDateWhen{false}
+
+            war.onlyIf { false }
+
+            task grailsCompile(description: "Compile grails sources", type: org.grails.gradle.plugin.tasks.GrailsTask){
+                command = "compile"
+            }
+
+            task buildStandalone(description: "Package grails application as a jar", type: org.grails.gradle.plugin.tasks.GrailsTask, dependsOn: [generateGrailsAppConfig, grailsCompile])
+
+            assemble.dependsOn([buildStandalone])
+
+            buildStandalone.outputs.upToDateWhen {
+                project.file("target/standalone-${project.version}.jar").exists()
+            }
+            clean.doLast{
+                project.file("target/standalone-${project.version}.jar").delete()
+            }
+        }
+    }
+
+    task install(description: "Installs the grails artefact(s) into the local Maven repository.", dependsOn: [publishToMavenLocal])
+    task deploy(description: "Deploys the grails artefact(s) into the remote Maven repository.", dependsOn: [publish])
+
+    publishing {
+        publications{
+            grailsArtefact(MavenPublication) {
+                if(!grailsApp){
+                    artifactId = "${project.archivesBaseName}" 
+                    if(grailsBinaryPlugin){
+                        artifact("target/grails-plugin-${project.archivesBaseName.minus('grails-plugin-')}-${project.version}.jar"){
+                            extension "jar"
+                            classifier "grails-plugin"
+                        }
+                    }
+                    else{
+                        artifact("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip"){
+                            extension "zip"
+                        }
+                    }
+                }
+                else{
+                    artifact("target/standalone-${project.version}.jar"){
+                        extension "jar"
+                        classifier "${grailsEnv}-standalone"
+                    }
+                }
+            }
+        }
+    }
+
+}
