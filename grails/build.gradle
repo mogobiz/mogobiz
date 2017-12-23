@@ -34,6 +34,10 @@ buildscript {
     __credentials.load(is)
     is.close()
 
+    ext {
+        grailsVersion = project.grailsVersion
+    }
+
     repositories {
         mavenLocal()
         maven {
@@ -52,21 +56,22 @@ buildscript {
                 password "${__credentials.getProperty('mogobizSnapshostsPassword')}"
             }
         }
-        jcenter()
+        maven { url "https://repo.grails.org/grails/core" }
     }
     dependencies {
         classpath "com.mogobiz.gradle:groovy-eclipse-compiler:0.1-SNAPSHOT"
         classpath 'org.jsonschema2pojo:jsonschema2pojo-gradle-plugin:0.5.1'
-        classpath "org.grails:grails-gradle-plugin:2.1.1"
+        classpath "org.grails:grails-gradle-plugin:$grailsVersion"
     }
 }
 
 allprojects {
     group "com.mogobiz"
     version "1.0.1-SNAPSHOT"
-    apply plugin: "maven"
+
     apply plugin: "maven-publish"
     apply plugin: "idea"
+    apply plugin: 'eclipse'
 
     def _credentials = loadCredentials()
 
@@ -90,7 +95,7 @@ allprojects {
             }
         }
     }
-    publishToMavenLocal.dependsOn([assemble])
+//    publishToMavenLocal.dependsOn([assemble])
 //    publish.dependsOn([publishToMavenLocal])
 
     if(project.version.endsWith("-SNAPSHOT")){
@@ -121,9 +126,17 @@ allprojects {
             }
         }
     }
+
+    task wrapper(type: Wrapper) {
+        gradleVersion = gradleWrapperVersion
+    }
+
 }
 
 ext {
+    grailsVersion = project.grailsVersion
+    gradleWrapperVersion = project.gradleWrapperVersion
+
     jacksonVersion = '2.7.0'
 
     oauth2Version = '0.31'
@@ -141,7 +154,7 @@ ext {
         "org.twitter4j:twitter4j-stream:$twitter4jVersion"
     ]
 
-    groovyVersion = '2.4.10'
+    groovyVersion = '2.4.5'
     _groovy = ["org.codehaus.groovy:groovy-all:$groovyVersion"]
 
     grailsApp = false
@@ -197,44 +210,43 @@ configure(project(":mogobiz-rivers").subprojects){
 }
 
 configure([
-    project(":plugins:grails-email-confirmation"), 
+    project(":plugins:grails-email-confirmation")/*, 
     project(":plugins:grails-jquery"), 
     project(":plugins:grails-jquery-ui"), 
     project(":mogobiz-core"), 
     project(":mogobiz-extensions"), 
-    project(":mogobiz-admin")]){
+    project(":mogobiz-admin")*/]){
 
-    apply plugin: "grails"
+    apply plugin: "spring-boot"
+    apply plugin: "org.grails.grails-plugin"
+    apply plugin: "org.grails.grails-gsp"
 
     repositories {
         mavenLocal()
         mavenCentral()
-        maven {
-            url "http://repo.grails.org/grails/core"
-            url "http://repo.grails.org/grails/plugins"
-        //    url "https://art.ebiznext.com/artifactory/libs-release/"
-        }
-        grails.central() //creates a maven repo for the Grails Central repository (Core libraries and plugins)
-    }
-
-    grails {
-        grailsVersion = '2.5.6'
-        groovyVersion = '2.4.10'
-        springLoadedVersion '1.2.0.RELEASE'
+        maven { url "https://repo.grails.org/grails/core" }
     }
 
     dependencies {
-        test "org.grails:grails-test:${grailsVersion}"
-        test "org.grails:grails-plugin-testing:${grailsVersion}"
-        test 'org.spockframework:spock-core:1.1-groovy-2.4'
-        test 'junit:junit:4.12'
-        provided 'org.grails.plugins:tomcat:7.0.54'
+        provided 'org.springframework.boot:spring-boot-starter-logging'
+        provided "org.springframework.boot:spring-boot-starter-actuator"
+        provided "org.springframework.boot:spring-boot-autoconfigure"
+        provided "org.springframework.boot:spring-boot-starter-tomcat"
+
+        provided "org.grails:grails-web-boot"
+        provided 'javax.servlet:javax.servlet-api:3.1.0'
+
+        compile  "org.grails:grails-dependencies"
+
+        testCompile "org.grails:grails-plugin-testing"
+
+        console "org.grails:grails-console"
     }
 
     afterEvaluate { project ->
         if(!grailsApp){
 
-            if(project.name in ["mogobiz-core", "mogobiz-extensions"]){
+            /*if(project.name in ["mogobiz-core", "mogobiz-extensions"]){
                 task generateGrailsPluginConfig(type: Copy){
                     from("${toCamelCase(project.name)}GrailsPlugin.groovy.template"){
                         filter{ it.replaceAll('%PROJECT_VERSION%', "${version}")}
@@ -256,18 +268,18 @@ configure([
                 packagePlugin.doLast{
                     copyGrailsPluginArtefact.execute()
                 }
-            }
+            }*/
 
-            packagePlugin.outputs.upToDateWhen { 
+            /*packagePlugin.outputs.upToDateWhen { 
                 if(grailsBinaryPlugin){
                     project.file("target/grails-plugin-${project.archivesBaseName.minus('grails-plugin-')}-${project.version}.jar").exists() 
                 }
                 else{
                     project.file("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip").exists() 
                 }
-            }
+            }*/
 
-            clean.doLast{
+            /*clean.doLast{
                 if(grailsBinaryPlugin){
                     project.file("target/grails-plugin-${project.archivesBaseName.minus('grails-plugin-')}-${project.version}.jar").delete() 
                 }
@@ -275,7 +287,7 @@ configure([
                     project.file("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip").delete() 
                     project.file("grails-${project.name}-${project.version}.zip").delete() 
                 }
-            }
+            }*/
         }
         else {
             task generateGrailsAppConfig(type: Copy){
@@ -307,15 +319,15 @@ configure([
         }
     }
 
-    task install(description: "Installs the grails artefact(s) into the local Maven repository.", dependsOn: [publishToMavenLocal])
-    task deploy(description: "Deploys the grails artefact(s) into the remote Maven repository.", dependsOn: [publish])
+//    task install(description: "Installs the grails artefact(s) into the local Maven repository.", dependsOn: [publishToMavenLocal])
+//    task deploy(description: "Deploys the grails artefact(s) into the remote Maven repository.", dependsOn: [publish])
 
     publishing {
         publications{
             grailsArtefact(MavenPublication) {
                 if(!grailsApp){
                     artifactId = "${project.archivesBaseName}" 
-                    if(grailsBinaryPlugin){
+                    /*if(grailsBinaryPlugin){
                         artifact("target/grails-plugin-${project.archivesBaseName.minus('grails-plugin-')}-${project.version}.jar"){
                             extension "jar"
                             classifier "grails-plugin"
@@ -325,7 +337,7 @@ configure([
                         artifact("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip"){
                             extension "zip"
                         }
-                    }
+                    }*/
                 }
                 else{
                     artifact("target/standalone-${project.version}.jar"){

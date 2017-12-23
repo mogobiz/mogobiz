@@ -11,12 +11,14 @@ if(!f3.exists()){
     new FileOutputStream(f3).close()
 }
 
+include 'plugins'
 include 'plugins:grails-email-confirmation'
-include 'plugins:grails-jquery'
-include 'plugins:grails-jquery-ui'
+//include 'plugins:grails-jquery'
+//include 'plugins:grails-jquery-ui'
 
 include 'mogobiz-tools'
 
+include 'mogobiz-rivers'
 include 'mogobiz-rivers:http-client'
 include 'mogobiz-rivers:common'
 include 'mogobiz-rivers:spi'
@@ -26,6 +28,6 @@ include 'mogobiz-rivers:google-shopping'
 include 'mogobiz-rivers:cfp'
 include 'mogobiz-rivers:mirakl'
 
-include 'mogobiz-core'
-include 'mogobiz-extensions'
-include 'mogobiz-admin'
+//include 'mogobiz-core'
+//include 'mogobiz-extensions'
+//include 'mogobiz-admin'
