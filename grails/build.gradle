@@ -40,6 +40,8 @@ buildscript {
 
     repositories {
         mavenLocal()
+        jcenter()
+        maven { url "https://repo.grails.org/grails/core" }
         maven {
             name "mogobiz.release"
             url  "https://art.ebiznext.com/artifactory/libs-release-local"
@@ -56,7 +58,6 @@ buildscript {
                 password "${__credentials.getProperty('mogobizSnapshostsPassword')}"
             }
         }
-        maven { url "https://repo.grails.org/grails/core" }
     }
     dependencies {
         classpath "com.mogobiz.gradle:groovy-eclipse-compiler:0.1-SNAPSHOT"
@@ -69,6 +70,7 @@ allprojects {
     group "com.mogobiz"
     version "1.0.1-SNAPSHOT"
 
+    apply plugin: "maven"
     apply plugin: "maven-publish"
     apply plugin: "idea"
     apply plugin: 'eclipse'
@@ -195,10 +197,6 @@ configure(project(":mogobiz-rivers").subprojects){
     version "1.0.1-SNAPSHOT"
     apply plugin: "maven"
     apply plugin: "maven-publish"
-    repositories {
-        mavenLocal()
-        mavenCentral()
-    }
     publishing {
         publications{
             library(MavenPublication) {
@@ -210,9 +208,9 @@ configure(project(":mogobiz-rivers").subprojects){
 }
 
 configure([
-    project(":plugins:grails-email-confirmation")/*, 
+    project(":plugins:grails-email-confirmation"), 
     project(":plugins:grails-jquery"), 
-    project(":plugins:grails-jquery-ui"), 
+    project(":plugins:grails-jquery-ui")/*, 
     project(":mogobiz-core"), 
     project(":mogobiz-extensions"), 
     project(":mogobiz-admin")*/]){
@@ -224,6 +222,7 @@ configure([
     repositories {
         mavenLocal()
         mavenCentral()
+        jcenter()
         maven { url "https://repo.grails.org/grails/core" }
     }
 
@@ -236,7 +235,7 @@ configure([
         provided "org.grails:grails-web-boot"
         provided 'javax.servlet:javax.servlet-api:3.1.0'
 
-        compile  "org.grails:grails-dependencies"
+        provided  "org.grails:grails-dependencies"
 
         testCompile "org.grails:grails-plugin-testing"
 
@@ -327,17 +326,20 @@ configure([
             grailsArtefact(MavenPublication) {
                 if(!grailsApp){
                     artifactId = "${project.archivesBaseName}" 
-                    /*if(grailsBinaryPlugin){
-                        artifact("target/grails-plugin-${project.archivesBaseName.minus('grails-plugin-')}-${project.version}.jar"){
+                    if(grailsBinaryPlugin){
+                        /*artifact("target/grails-plugin-${project.archivesBaseName.minus('grails-plugin-')}-${project.version}.jar"){
                             extension "jar"
                             classifier "grails-plugin"
-                        }
+                        }*/
                     }
                     else{
-                        artifact("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip"){
+                        artifact("$distsDir/${project.name}-${project.version}.zip"){
                             extension "zip"
                         }
-                    }*/
+                        artifact("$libsDir/${project.name}-${project.version}.jar"){
+                            extension "jar"
+                        }
+                    }
                 }
                 else{
                     artifact("target/standalone-${project.version}.jar"){

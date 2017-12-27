@@ -13,8 +13,8 @@ if(!f3.exists()){
 
 include 'plugins'
 include 'plugins:grails-email-confirmation'
-//include 'plugins:grails-jquery'
-//include 'plugins:grails-jquery-ui'
+include 'plugins:grails-jquery'
+include 'plugins:grails-jquery-ui'
 
 include 'mogobiz-tools'
 
