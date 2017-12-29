@@ -13,6 +13,7 @@ if(!f3.exists()){
 
 include 'plugins'
 include 'plugins:grails-email-confirmation'
+include 'plugins:grails-google-data'
 include 'plugins:grails-jquery'
 include 'plugins:grails-jquery-ui'
 

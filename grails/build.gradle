@@ -209,6 +209,7 @@ configure(project(":mogobiz-rivers").subprojects){
 
 configure([
     project(":plugins:grails-email-confirmation"), 
+    project(":plugins:grails-google-data"), 
     project(":plugins:grails-jquery"), 
     project(":plugins:grails-jquery-ui")/*, 
     project(":mogobiz-core"), 
