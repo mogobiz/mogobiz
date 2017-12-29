@@ -220,6 +220,10 @@ configure([
     apply plugin: "org.grails.grails-plugin"
     apply plugin: "org.grails.grails-gsp"
 
+    ext {
+        archivesBaseName = "${project.name.minus('grails-')}"
+    }
+
     repositories {
         mavenLocal()
         mavenCentral()
