@@ -12,10 +12,18 @@ if(!f3.exists()){
 }
 
 include 'plugins'
+include 'plugins:grails-cache-headers'
+include 'plugins:grails-cached-resources'
 include 'plugins:grails-email-confirmation'
+include 'plugins:grails-executor'
+include 'plugins:grails-facebook-graph'
 include 'plugins:grails-google-data'
 include 'plugins:grails-jquery'
 include 'plugins:grails-jquery-ui'
+include 'plugins:grails-platform-core'
+include 'plugins:grails-resources'
+include 'plugins:grails-shiro:shiro3:grails-shiro'
+include 'plugins:grails-webxml'
 
 include 'mogobiz-tools'
 
@@ -29,6 +37,6 @@ include 'mogobiz-rivers:google-shopping'
 include 'mogobiz-rivers:cfp'
 include 'mogobiz-rivers:mirakl'
 
-//include 'mogobiz-core'
-//include 'mogobiz-extensions'
-//include 'mogobiz-admin'
+include 'mogobiz-core'
+include 'mogobiz-extensions'
+include 'mogobiz-admin'

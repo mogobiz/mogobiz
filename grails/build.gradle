@@ -63,6 +63,10 @@ buildscript {
         classpath "com.mogobiz.gradle:groovy-eclipse-compiler:0.1-SNAPSHOT"
         classpath 'org.jsonschema2pojo:jsonschema2pojo-gradle-plugin:0.5.1'
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+        classpath 'com.bertramlabs.plugins:asset-pipeline-gradle:2.5.0'
+        classpath "org.grails.plugins:hibernate:$grailsHibernateVersion"
+//        classpath "org.asciidoctor:asciidoctor-gradle-plugin:$asciidoctorGradlePluginVersion"
+//        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.4.0"
     }
 }
 
@@ -208,17 +212,26 @@ configure(project(":mogobiz-rivers").subprojects){
 }
 
 configure([
+    project(":plugins:grails-cache-headers"), 
+    project(":plugins:grails-cached-resources"), 
     project(":plugins:grails-email-confirmation"), 
+    project(":plugins:grails-executor"), 
+    project(":plugins:grails-facebook-graph"),
     project(":plugins:grails-google-data"), 
     project(":plugins:grails-jquery"), 
-    project(":plugins:grails-jquery-ui")/*, 
+    project(":plugins:grails-jquery-ui"), 
+    project(":plugins:grails-platform-core"), 
+    project(":plugins:grails-resources"), 
+    project(":plugins:grails-shiro:shiro3:grails-shiro"),
+    project(":plugins:grails-webxml"), 
     project(":mogobiz-core"), 
-    project(":mogobiz-extensions"), 
-    project(":mogobiz-admin")*/]){
+    project(":mogobiz-extensions")]){
 
     apply plugin: "spring-boot"
     apply plugin: "org.grails.grails-plugin"
     apply plugin: "org.grails.grails-gsp"
+
+    bootRepackage.enabled = false
 
     ext {
         archivesBaseName = "${project.name.minus('grails-')}"
@@ -247,110 +260,18 @@ configure([
         console "org.grails:grails-console"
     }
 
-    afterEvaluate { project ->
-        if(!grailsApp){
-
-            /*if(project.name in ["mogobiz-core", "mogobiz-extensions"]){
-                task generateGrailsPluginConfig(type: Copy){
-                    from("${toCamelCase(project.name)}GrailsPlugin.groovy.template"){
-                        filter{ it.replaceAll('%PROJECT_VERSION%', "${version}")}
-                    }
-                    into(".")
-                    rename("${toCamelCase(project.name)}GrailsPlugin.groovy.template", "${toCamelCase(project.name)}GrailsPlugin.groovy")
-                }
-
-                generateGrailsPluginConfig.outputs.upToDateWhen{false}
-
-                packagePlugin.dependsOn([generateGrailsPluginConfig])
-            }
-            else if(project.name.startsWith("grails-")){
-                task copyGrailsPluginArtefact(type: Copy){
-                    from("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip")
-                    into(".")
-                    rename("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip", "grails-${project.name}-${project.version}.zip")
-                }
-                packagePlugin.doLast{
-                    copyGrailsPluginArtefact.execute()
-                }
-            }*/
-
-            /*packagePlugin.outputs.upToDateWhen { 
-                if(grailsBinaryPlugin){
-                    project.file("target/grails-plugin-${project.archivesBaseName.minus('grails-plugin-')}-${project.version}.jar").exists() 
-                }
-                else{
-                    project.file("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip").exists() 
-                }
-            }*/
-
-            /*clean.doLast{
-                if(grailsBinaryPlugin){
-                    project.file("target/grails-plugin-${project.archivesBaseName.minus('grails-plugin-')}-${project.version}.jar").delete() 
-                }
-                else{
-                    project.file("grails-${project.archivesBaseName.minus('grails-')}-${project.version}.zip").delete() 
-                    project.file("grails-${project.name}-${project.version}.zip").delete() 
-                }
-            }*/
-        }
-        else {
-            task generateGrailsAppConfig(type: Copy){
-                from("application.properties.template"){
-                    filter{ it.replaceAll('%PROJECT_VERSION%', "${version}")}
-                }
-                into(".")
-                rename("application.properties.template", "application.properties")
-            }
-
-            generateGrailsAppConfig.outputs.upToDateWhen{false}
-
-            war.onlyIf { false }
-
-            task grailsCompile(description: "Compile grails sources", type: org.grails.gradle.plugin.tasks.GrailsTask){
-                command = "compile"
-            }
-
-            task buildStandalone(description: "Package grails application as a jar", type: org.grails.gradle.plugin.tasks.GrailsTask, dependsOn: [generateGrailsAppConfig, grailsCompile])
-
-            assemble.dependsOn([buildStandalone])
-
-            buildStandalone.outputs.upToDateWhen {
-                project.file("target/standalone-${project.version}.jar").exists()
-            }
-            clean.doLast{
-                project.file("target/standalone-${project.version}.jar").delete()
-            }
-        }
-    }
-
 //    task install(description: "Installs the grails artefact(s) into the local Maven repository.", dependsOn: [publishToMavenLocal])
 //    task deploy(description: "Deploys the grails artefact(s) into the remote Maven repository.", dependsOn: [publish])
 
     publishing {
         publications{
             grailsArtefact(MavenPublication) {
-                if(!grailsApp){
-                    artifactId = "${project.archivesBaseName}" 
-                    if(grailsBinaryPlugin){
-                        /*artifact("target/grails-plugin-${project.archivesBaseName.minus('grails-plugin-')}-${project.version}.jar"){
-                            extension "jar"
-                            classifier "grails-plugin"
-                        }*/
-                    }
-                    else{
-                        artifact("$distsDir/${project.name}-${project.version}.zip"){
-                            extension "zip"
-                        }
-                        artifact("$libsDir/${project.name}-${project.version}.jar"){
-                            extension "jar"
-                        }
-                    }
+                artifactId = "${project.archivesBaseName}" 
+                artifact("$distsDir/${project.name}-${project.version}.zip"){
+                    extension "zip"
                 }
-                else{
-                    artifact("target/standalone-${project.version}.jar"){
-                        extension "jar"
-                        classifier "${grailsEnv}-standalone"
-                    }
+                artifact("$libsDir/${project.name}-${project.version}.jar"){
+                    extension "jar"
                 }
             }
         }

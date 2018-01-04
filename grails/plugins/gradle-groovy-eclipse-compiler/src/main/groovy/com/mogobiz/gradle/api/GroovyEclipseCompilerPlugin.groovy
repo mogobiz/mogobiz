@@ -35,7 +35,7 @@ class GroovyEclipseCompilerPlugin implements Plugin<ProjectInternal> {
 
     // Set up the compileJava task
     final Configuration compile = project.configurations.findByName("compile")
-    compile.dependencies.add(project.getDependencies().create("org.codehaus.groovy:groovy-all:2.4.10"))
+    compile.dependencies.add(project.getDependencies().create("org.codehaus.groovy:groovy-all:2.4.5"))
     def compileGroovyEclipse = project.tasks.create("compileGroovyEclipse", JavaCompile.class)
     FileTree groovySources = project.fileTree(dir: 'src/main/groovy').include('**/*.groovy') as FileTree
     compileGroovyEclipse.setSource(groovySources)

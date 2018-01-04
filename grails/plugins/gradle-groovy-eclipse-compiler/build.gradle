@@ -59,3 +59,11 @@ else{
         }
     }
 }
+
+ext {
+    groovyVersion = "2.4.5"
+}
+
+dependencies {
+    compile "org.codehaus.groovy:groovy-all:$groovyVersion"
+}

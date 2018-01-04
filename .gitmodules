@@ -87,3 +87,27 @@
 [submodule "grails/plugins/grails-google-data"]
 	path = grails/plugins/grails-google-data
 	url = git@github.com:mogobiz/grails-google-data.git
+[submodule "grails/plugins/grails-facebook-graph"]
+	path = grails/plugins/grails-facebook-graph
+	url = git@github.com:mogobiz/grails-facebook-graph.git
+[submodule "grails/plugins/grails-platform-core"]
+	path = grails/plugins/grails-platform-core
+	url = git@github.com:mogobiz/grails-platform-core.git
+[submodule "grails/plugins/grails-resources"]
+	path = grails/plugins/grails-resources
+	url = git@github.com:mogobiz/grails-resources.git
+[submodule "grails/plugins/grails-webxml"]
+	path = grails/plugins/grails-webxml
+	url = git@github.com:mogobiz/grails-webxml.git
+[submodule "grails/plugins/grails-cache-headers"]
+	path = grails/plugins/grails-cache-headers
+	url = git@github.com:mogobiz/cache-headers.git
+[submodule "grails/plugins/grails-executor"]
+	path = grails/plugins/grails-executor
+	url = git@github.com:mogobiz/grails-executor.git
+[submodule "grails/plugins/grails-cached-resources"]
+	path = grails/plugins/grails-cached-resources
+	url = git@github.com:mogobiz/grails-cached-resources.git
+[submodule "grails/plugins/grails-shiro"]
+	path = grails/plugins/grails-shiro
+	url = git@github.com:mogobiz/grails-shiro.git
