@@ -6,14 +6,12 @@ organization in ThisBuild := "com.mogobiz"
 
 logLevel in Global := Level.Info
 
-crossScalaVersions in ThisBuild := Seq("2.11.6")
-
-scalaVersion in ThisBuild := "2.11.6"
+scalaVersion in ThisBuild := "2.11.7"
 
 resolvers in ThisBuild ++= Seq(
   Resolver.sonatypeRepo("releases"),
   "spray repo" at "http://repo.spray.io/",
-  "ebiz repo" at "http://art.ebiznext.com/artifactory/libs-release-local",
+  //"ebiz repo" at "http://art.ebiznext.com/artifactory/libs-release-local",
   "scribe-java-mvn-repo" at "https://raw.github.com/fernandezpablo85/scribe-java/mvn-repo",
   "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases/",
   "BoneCP Repository" at "http://jolbox.com/bonecp/downloads/maven"
@@ -26,17 +24,15 @@ git.gitUncommittedChanges in ThisBuild := false
 
 val akkaV = "2.3.9"
 
-val sprayV = "1.3.3"
+val sprayV = "1.3.4"
 
 val scalikeV = "2.3.5"
 
-val jacksonV = "2.5.2"
+val jacksonV = "2.8.8"
 
-val json4sV = "3.2.11"
+val json4sV = "3.5.3"
 
-val elastic4sV = "1.7.4"
-
-val elasticSearchV = "1.7.3"
+val elastic4sV = "5.6.0"
 
 val configV = "1.2.1"
 
@@ -47,6 +43,8 @@ val elasticsearchMapperAttachmentsV = "2.7.1"
 val itextV = "5.5.4"
 
 val metricsVersion = "3.1.0"
+
+val scalaTestV = "3.0.1"
 
 libraryDependencies in ThisBuild ++= Seq(
   "postgresql" % "postgresql" % "9.1-901.jdbc4",
@@ -62,50 +60,43 @@ libraryDependencies in ThisBuild ++= Seq(
   "com.itextpdf" % "itextpdf" % itextV,
   "com.itextpdf.tool" % "xmlworker" % itextV,
   "joda-time" % "joda-time" % "2.7",
+  "org.bouncycastle" % "bcprov-jdk15on" % "1.58",
   "org.joda" % "joda-convert" % "1.7",
   "com.github.fernandospr" % "javapns-jdk16" % "2.3.1",
   "org.scribe" % "scribe" % "1.3.7",
   "com.typesafe" % "config" % configV,
-  //"mysql" % "mysql-connector-java" % "5.1.12",
   "com.h2database" % "h2" % "1.4.177" % "test",
   "com.jolbox" % "bonecp" % "0.8.0.RELEASE",
-  "io.spray" %% "spray-can" % sprayV,
-  "io.spray" %% "spray-routing" % sprayV,
-  "io.spray" %% "spray-testkit" % sprayV % "test",
-  "io.spray" %% "spray-client" % sprayV,
-  "io.spray" %% "spray-http" % sprayV,
-  "io.spray" %% "spray-httpx" % sprayV,
-  "io.spray" %% "spray-util" % sprayV,
+  "com.typesafe.akka" %% "akka-http" % "10.0.11",
+  "com.typesafe.akka" %% "akka-stream" % "2.5.7", // or whatever the latest version is
+  "com.typesafe.akka" %% "akka-actor"  % "2.5.7",  // or whatever the latest version is;
   "org.json4s" %% "json4s-native" % json4sV,
+  "org.json4s" %% "json4s-ext" % json4sV,
   "org.json4s" %% "json4s-jackson" % json4sV,
   "org.json4s" %% "json4s-ext" % json4sV,
-  "com.typesafe.akka" %% "akka-actor" % akkaV,
-  "com.typesafe.akka" %% "akka-remote" % akkaV,
-  "com.typesafe.akka" %% "akka-testkit" % akkaV % "test",
-  "com.typesafe.akka" %% "akka-slf4j" % akkaV,
-  "com.typesafe.akka" %% "akka-stream-experimental" % "1.0-M3",
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonV,
+  "com.fasterxml.jackson.datatype" % "jackson-datatype-joda" % jacksonV,
   "com.fasterxml.jackson.core" % "jackson-annotations" % jacksonV,
   "com.fasterxml.jackson.core" % "jackson-core" % jacksonV,
   "com.fasterxml.jackson.core" % "jackson-databind" % jacksonV,
-  "org.specs2" %% "specs2" % "2.3.13" % "test",
-  "org.apache.commons" % "commons-email" % "1.3.3",
-  "org.apache.shiro" % "shiro-all" % "1.2.0",
-  "com.sksamuel.elastic4s" %% "elastic4s-core" % elastic4sV exclude("org.elasticsearch", "elasticsearch"),
-  "org.elasticsearch" % "elasticsearch" % elasticSearchV,
-  "org.elasticsearch" % "elasticsearch-analysis-icu" % elasticsearchAnalysisICUV,
-  "org.elasticsearch" % "elasticsearch-mapper-attachments" % elasticsearchMapperAttachmentsV,
+  "org.scalatest" %% "scalatest" % scalaTestV % "test",
+  "org.apache.commons" % "commons-email" % "1.5",
+  "org.apache.commons" % "commons-lang3" % "3.7",
+  "org.apache.shiro" % "shiro-all" % "1.4.0",
+  "com.sksamuel.elastic4s" %% "elastic4s-core" % elastic4sV,
+  "com.sksamuel.elastic4s" %% "elastic4s-http" % elastic4sV,
+  "com.sksamuel.elastic4s" %% "elastic4s-embedded" % elastic4sV,
   "com.google.zxing" % "core" % "1.7",
-  "org.scala-lang.modules" %% "scala-async" % "0.9.2" % "test",
-  "com.sun.xml.messaging.saaj" % "saaj-impl" % "1.3.18",
+  "com.sun.xml.messaging.saaj" % "saaj-impl" % "1.4.0",
   "net.authorize" % "anet-java-sdk" % "1.8.3",
   "com.mortennobel" % "java-image-scaling" % "0.8.6",
-  "org.apache.httpcomponents" % "httpcore" % "4.4.1",
-  "org.apache.httpcomponents" % "httpclient" % "4.4",
-  "org.apache.tika" % "tika-core" % "1.7",
-  "com.easypost" % "easypost-java" % "2.1.0",
+  "org.apache.httpcomponents" % "httpcore" % "4.4.8",
+  "org.apache.httpcomponents" % "httpclient" % "4.5.3",
+  "org.apache.tika" % "tika-core" % "1.16",
+  "com.easypost" % "easypost-api-client" % "3.3.5",
   "com.google.code.gson" % "gson" % "2.2.4",
-  "com.google.maps" % "google-maps-services" % "0.1.7"
+  "com.google.maps" % "google-maps-services" % "0.1.7",
+  "de.heikoseeberger" %% "akka-http-json4s" % "1.18.1"
 )
 
 lazy val msys = project.in(file("mogobiz-system"))
@@ -126,11 +117,9 @@ lazy val mnotify = project.in(file("mogobiz-notify")).dependsOn(html2pdf, es, js
 
 lazy val mauth = project.in(file("mogobiz-auth")).dependsOn(html2pdf, es, json, session, utils)
 
-lazy val mirakl = project.in(file("mogobiz-mirakl")).dependsOn(msys, json)
-
 lazy val mogopayCommon = project.in(file("mogopay-common")).dependsOn(json)
 
-lazy val mogopayCore = project.in(file("mogopay-core")).dependsOn(msys, mauth, mnotify, html2pdf, es, json, session, utils, template, mogopayCommon, mirakl)
+lazy val mogopayCore = project.in(file("mogopay-core")).dependsOn(msys, mauth, mnotify, html2pdf, es, json, session, utils, template, mogopayCommon)
 
 lazy val mogobizRun = project.in(file("mogobiz-run")).dependsOn(mogopayCore)
 
@@ -149,7 +138,6 @@ lazy val root = project.in(file(".")).aggregate(
   session,
   mnotify,
   mauth,
-  mirakl,
   mogopayCommon,
   mogopayCore,
   mogopayCommon,
@@ -246,3 +234,5 @@ packExpandedClasspath := false
 fork in ThisBuild := true
 
 scalafmtConfig in ThisBuild := Some(file(".scalafmt"))
+
+

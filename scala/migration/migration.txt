@@ -1,0 +1,3 @@
+Elasticsearch
+--------------
+-ttl no more available on ES 5.X : Set a cronjob to delete objects
