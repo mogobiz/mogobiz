@@ -74,3 +74,13 @@
 [submodule "scala/mogobiz-mockserver"]
 	path = scala/mogobiz-mockserver
 	url = git@github.com:mogobiz/mogobiz-mockserver.git
+[submodule "grails/plugins/grails-email-confirmation"]
+	path = grails/plugins/grails-email-confirmation
+	url = git@github.com:mogobiz/grails-email-confirmation.git
+	branch = master
+[submodule "grails/plugins/grails-jquery"]
+	path = grails/plugins/grails-jquery
+	url = git@github.com:mogobiz/grails-jquery.git
+[submodule "grails/plugins/grails-jquery-ui"]
+	path = grails/plugins/grails-jquery-ui
+	url = git@github.com:mogobiz/grails-jquery-ui.git

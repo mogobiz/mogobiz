@@ -14,6 +14,7 @@
     <modules>
         <module>mogobiz-tools</module>
         <module>mogobiz-rivers</module>
+        <module>plugins</module>
         <module>mogobiz-core</module>
         <module>mogobiz-extensions</module>
         <module>mogobiz-admin</module>
@@ -24,19 +25,19 @@
         <repository>
             <id>mogobiz.release</id>
             <name>Internal Release Repository</name>
-            <url>http://art.ebiznext.com/artifactory/libs-release-local</url>
+            <url>https://art.ebiznext.com/artifactory/libs-release-local</url>
         </repository>
         <snapshotRepository>
             <id>mogobiz.snapshots</id>
             <name>Internal Snapshot Repository</name>
-            <url>http://art.ebiznext.com/artifactory/libs-snapshot-local</url>
+            <url>https://art.ebiznext.com/artifactory/libs-snapshot-local</url>
         </snapshotRepository>
     </distributionManagement>
     <repositories>
         <repository>
             <id>mogobiz.release</id>
             <name>Internal Release Repository</name>
-            <url>http://art.ebiznext.com/artifactory/libs-release-local</url>
+            <url>https://art.ebiznext.com/artifactory/libs-release-local</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -47,7 +48,7 @@
         <repository>
             <id>mogobiz.snapshots</id>
             <name>Internal Snapshot Repository</name>
-            <url>http://art.ebiznext.com/artifactory/libs-snapshot-local</url>
+            <url>https://art.ebiznext.com/artifactory/libs-snapshot-local</url>
             <releases>
                 <enabled>false</enabled>
             </releases>
@@ -67,20 +68,33 @@
             <url>http://repo.grails.org/grails/plugins</url>
         </repository>
     </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>bintray</id>
+            <name>Groovy Bintray</name>
+            <url>https://dl.bintray.com/groovy/maven</url>
+            <releases>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
     <dependencyManagement>
         <dependencies>
             <!-- groovy -->
             <dependency>
                 <groupId>org.codehaus.groovy</groupId>
                 <artifactId>groovy-all</artifactId>
-                <version>2.1.9</version><!-- FIXME we can not use ${groovy.version} -->
+                <version>${groovy.version}</version>
             </dependency>
 
             <!-- rxjava-reactive-streams -->
             <dependency>
                 <groupId>io.reactivex</groupId>
                 <artifactId>rxjava-reactive-streams</artifactId>
-                <version>1.0.1</version>
+                <version>1.0.1</version><!-- TODO upgrade to version 1.2.1 ? //-->
                 <scope>compile</scope>
                 <exclusions>
                     <exclusion>
@@ -94,7 +108,7 @@
             <dependency>
                 <groupId>io.reactivex</groupId>
                 <artifactId>rxjava</artifactId>
-                <version>1.0.15</version>
+                <version>1.0.17</version><!-- TODO upgrade ? -->
                 <scope>compile</scope>
             </dependency>
 
@@ -294,7 +308,7 @@
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
-                <version>4.11</version>
+                <version>4.12</version>
             </dependency>
 
             <dependency>
@@ -314,7 +328,7 @@
             <dependency>
                 <groupId>org.spockframework</groupId>
                 <artifactId>spock-core</artifactId>
-                <version>0.7-groovy-2.0</version>
+                <version>1.1-groovy-${groovy.major.version}</version>
                 <exclusions>
                     <exclusion>
                         <groupId>org.codehaus.groovy</groupId>
@@ -432,11 +446,17 @@
                 <scope>runtime</scope>
             </dependency>
 
+            <dependency>
+                <groupId>org.grails</groupId>
+                <artifactId>grails-resources</artifactId>
+                <version>${grails.version}</version>
+            </dependency>
+
             <!-- BEGIN grails plugins -->
             <dependency>
                 <groupId>org.grails.plugins</groupId>
                 <artifactId>cache</artifactId>
-                <version>1.1.3</version>
+                <version>1.1.8</version>
                 <type>zip</type>
             </dependency>
 
@@ -460,9 +480,8 @@
                 <version>0.1.3</version>
                 <type>zip</type>
             </dependency>
-
             <dependency>
-                <groupId>org.grails.plugins</groupId>
+                <groupId>com.mogobiz</groupId>
                 <artifactId>email-confirmation</artifactId>
                 <version>2.0.8</version>
                 <type>zip</type>
@@ -473,7 +492,6 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-
             <dependency>
                 <groupId>org.grails.plugins</groupId>
                 <artifactId>shiro</artifactId>
@@ -490,28 +508,28 @@
             <dependency>
                 <groupId>org.grails.plugins</groupId>
                 <artifactId>mail</artifactId>
-                <version>1.0.5</version>
+                <version>1.0.7</version>
                 <type>zip</type>
             </dependency>
 
             <dependency>
                 <groupId>org.grails.plugins</groupId>
                 <artifactId>quartz</artifactId>
-                <version>1.0.1</version>
+                <version>1.0.2</version>
                 <type>zip</type>
             </dependency>
 
             <dependency>
                 <groupId>org.grails.plugins</groupId>
                 <artifactId>recaptcha</artifactId>
-                <version>0.6.8</version>
+                <version>1.7.0</version>
                 <type>zip</type>
             </dependency>
 
             <dependency>
                 <groupId>org.grails.plugins</groupId>
                 <artifactId>cache-headers</artifactId>
-                <version>1.1.6</version>
+                <version>1.1.7</version>
                 <type>zip</type>
             </dependency>
 
@@ -525,7 +543,7 @@
             <dependency>
                 <groupId>org.grails.plugins</groupId>
                 <artifactId>cookie</artifactId>
-                <version>0.51</version>
+                <version>1.4</version>
                 <type>zip</type>
             </dependency>
 
@@ -539,28 +557,28 @@
             <dependency>
                 <groupId>org.grails.plugins</groupId>
                 <artifactId>joda-time</artifactId>
-                <version>1.4</version>
+                <version>1.5</version>
                 <type>zip</type>
             </dependency>
 
             <dependency>
                 <groupId>org.grails.plugins</groupId>
                 <artifactId>hibernate</artifactId>
-                <version>3.6.10.15</version>
+                <version>3.6.10.19</version>
                 <type>zip</type>
             </dependency>
 
             <dependency>
                 <groupId>org.grails.plugins</groupId>
                 <artifactId>database-migration</artifactId>
-                <version>1.4.0</version>
+                <version>1.4.1</version>
                 <type>zip</type>
             </dependency>
 
             <dependency>
                 <groupId>org.grails.plugins</groupId>
                 <artifactId>resources</artifactId>
-                <version>1.2.8</version>
+                <version>1.2.14</version>
                 <type>zip</type>
             </dependency>
 
@@ -584,13 +602,13 @@
             <dependency>
                 <groupId>org.grails.plugins</groupId>
                 <artifactId>console</artifactId>
-                <version>1.5.7</version>
+                <version>1.5.12</version>
                 <scope>runtime</scope>
                 <type>zip</type>
             </dependency>
 
             <dependency>
-                <groupId>org.grails.plugins</groupId>
+                <groupId>com.mogobiz</groupId>
                 <artifactId>jquery</artifactId>
                 <version>1.9.1</version>
                 <scope>compile</scope>
@@ -598,9 +616,9 @@
             </dependency>
 
             <dependency>
-                <groupId>org.grails.plugins</groupId>
+                <groupId>com.mogobiz</groupId>
                 <artifactId>jquery-ui</artifactId>
-                <version>1.8.24</version>
+                <version>1.8.16</version>
                 <scope>compile</scope>
                 <type>zip</type>
             </dependency>
@@ -608,7 +626,7 @@
             <dependency>
                 <groupId>org.grails.plugins</groupId>
                 <artifactId>standalone</artifactId>
-                <version>1.3</version>
+                <version>9.0.0.M4</version>
                 <scope>compile</scope>
                 <type>zip</type>
             </dependency>
@@ -642,13 +660,13 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>1.9.1</version>
+                    <version>3.0.0</version>
                 </plugin>
                 <!-- maven-compiler-plugin -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.1</version>
+                    <version>3.6.2</version>
                     <configuration>
                         <compilerId>groovy-eclipse-compiler</compilerId>
                         <source>${compiler.source}</source>
@@ -656,25 +674,48 @@
                         <encoding>${project.build.sourceEncoding}</encoding>
                         <fork>false</fork>
                         <meminitial>256m</meminitial>
-                        <maxmem>1024m</maxmem>
+                        <maxmem>2048m</maxmem>
                     </configuration>
                     <dependencies>
                         <dependency>
                             <groupId>org.codehaus.groovy</groupId>
                             <artifactId>groovy-eclipse-compiler</artifactId>
-                            <version>2.8.0-01</version>
+                            <version>2.9.2-01</version>
                         </dependency>
                         <dependency>
                             <groupId>org.codehaus.groovy</groupId>
                             <artifactId>groovy-eclipse-batch</artifactId>
-                            <version>${groovy.version}-01</version>
+                            <version>2.1.8-01</version><!--2.1.8-01//-->
                         </dependency>
                     </dependencies>
                 </plugin>
                 <plugin>
+                    <groupId>org.codehaus.gmavenplus</groupId>
+                    <artifactId>gmavenplus-plugin</artifactId>
+                    <version>1.6</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>addSources</goal>
+                                <goal>addTestSources</goal>
+                                <goal>generateStubs</goal>
+                                <goal>compile</goal>
+                                <goal>generateTestStubs</goal>
+                                <goal>compileTests</goal>
+                                <goal>removeStubs</goal>
+                                <goal>removeTestStubs</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
                     <groupId>net.alchim31.maven</groupId>
                     <artifactId>scala-maven-plugin</artifactId>
-                    <version>3.1.6</version>
+                    <version>3.3.1</version>
+                    <configuration>
+                        <source>${compiler.source}</source>
+                        <target>${compiler.target}</target>
+                    </configuration>
                     <executions>
                         <execution>
                             <id>scala-compile</id>
@@ -697,7 +738,7 @@
                 <plugin>
                     <groupId>org.jsonschema2pojo</groupId>
                     <artifactId>jsonschema2pojo-maven-plugin</artifactId>
-                    <version>0.4.22</version>
+                    <version>0.5.1</version>
                     <executions>
                         <execution>
                             <goals>
@@ -750,12 +791,22 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
-                    <version>2.2</version>
+                    <version>2.5</version>
                 </plugin>
                 <plugin>
                   <groupId>com.google.code.maven-replacer-plugin</groupId>
                   <artifactId>replacer</artifactId>
                   <version>1.5.3</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.grails</groupId>
+                    <artifactId>grails-maven-plugin</artifactId>
+                    <version>2.4.6</version>
+                    <configuration>
+                        <grailsVersion>${grails.version}</grailsVersion>
+                        <showStacktrace>true</showStacktrace>
+                    </configuration>
+                    <extensions>true</extensions>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -783,20 +834,21 @@
     </profiles>
 
     <properties>
-        <groovy.major.version>2.1</groovy.major.version>
-        <groovy.version>${groovy.major.version}.8</groovy.version>
+        <groovy.major.version>2.4</groovy.major.version>
+        <groovy.version>${groovy.major.version}.10</groovy.version>
         <compiler.source>1.7</compiler.source>
         <compiler.target>${compiler.source}</compiler.target>
         <scala.major.version>2.11</scala.major.version>
-        <scala.version>${scala.major.version}.2</scala.version>
+        <scala.minor.version>8</scala.minor.version>
+        <scala.version>${scala.major.version}.${scala.minor.version}</scala.version>
         <akka.version>2.3.12</akka.version>
         <akka.stream.version>1.0-M3</akka.stream.version>
         <spray.version>1.3.2</spray.version>
         <json4s.version>3.2.11</json4s.version>
-        <sl4j.version>1.7.5</sl4j.version>
+        <sl4j.version>1.7.21</sl4j.version>
         <log4j.version>1.2.17</log4j.version>
         <jackson.version>2.7.0</jackson.version>
-        <grails.version>2.3.8</grails.version>
+        <grails.version>2.5.6</grails.version>
         <twitter4j.version>2.2.5</twitter4j.version>
         <oauth2.version>0.31</oauth2.version>
         <h2.version>1.3.170</h2.version>
@@ -804,8 +856,8 @@
         <postgresql.version>9.1-901.jdbc4</postgresql.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
-        <release.version>1.0.0</release.version>
-        <development.version>1.0.0-SNAPSHOT</development.version>
+        <release.version>1.0.1</release.version>
+        <development.version>1.0.1-SNAPSHOT</development.version>
     </properties>
 
 </project>
