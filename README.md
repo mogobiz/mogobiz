@@ -1,7 +1,7 @@
 # mogobiz
 The MogoBiz ecommerce platform was created with high scalability and top performance in mind. That’s why it was developed with the latest, best of breed technology.
 
-![Mogobiz Architecture](mogobiz-rest.png)
+![Mogobiz Architecture](mogobiz-back.png)
 
 ## Multi-Channel & Multi-Device
 MogoBiz is designed with fully modular services that can be customized and extended as needed. These services are accessed using the REST / JSON protocol, which lets you develop your frontend in whatever language you prefer, or whatever language needed for the devices and channels your ecommerce site supports. Multi-channel and multi-device capabilities are inherent to the MogoBiz platform.
