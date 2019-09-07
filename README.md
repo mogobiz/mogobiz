@@ -19,5 +19,5 @@ MogoBiz uses Apache Spark and Spark Streaming for personalized recommendations, 
 - Recently viewed products
 - Recommendation based on customer journey
 
-## DevOps & Agitiy
+## DevOps & Agility
 MogoBiz is a collection of micro-services that allows for hyper fast start up times – less than a second! – for short development cycles. MogoBiz also provides instant deployment with zero downtime. It natively supports Docker and Ansible.
